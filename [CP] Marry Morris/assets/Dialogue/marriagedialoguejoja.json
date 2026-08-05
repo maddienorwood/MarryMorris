@@ -1,0 +1,52 @@
+{
+    "Changes": [
+    {
+    "Action": "EditData",
+    "Target": "Characters/Dialogue/MarriageDialogueMorrisTod",
+    "Entries": {
+        
+            //Indoor dialogue during the day with rainy weather
+            "Rainy_Day_4": "{{i18n: MarriageJoja.Rainy_Day_4}}",
+        
+            //Indoor dialogue during the day with good weather
+            "Indoor_Day_4": "{{i18n: MarriageJoja.Indoor_Day_4}}",
+        
+            //Indoor nighttime dialogue during rain
+            "Rainy_Night_4": "{{i18n: MarriageJoja.Rainy_Night_4}}",
+        
+            //Child dialogue
+            "OneKid_3": "{{i18n: MarriageJoja.OneKid_3}}",
+            "TwoKids_4": "{{i18n: MarriageJoja.TwoKids_4}}",
+        
+            //Good dialogue
+            "Good_8": "{{i18n: MarriageJoja.Good_8}}",
+            "Good_9": "{{i18n: MarriageJoja.Good_9}}",
+        
+            //Neutral dialogue
+            "Neutral_8": "{{i18n: MarriageJoja.Neutral_8}}",
+            "Neutral_9": "{{i18n: MarriageJoja.Neutral_9}}",
+        
+            //Bad dialogue
+            "Bad_8": "{{i18n: MarriageJoja.Bad_8}}",
+            "Bad_9": "{{i18n: MarriageJoja.Bad_9}}",
+        
+            //Day-specific dialogue
+            "winter_28": "{{i18n: Marriage.winter_28}}",
+            "spring_1_2": "{{i18n: MarriageJoja.spring_1_2}}",
+            "spring_12": "{{i18n: NoCCSVE.spring_12}}",
+            "spring_23": "{{i18n: NoCCSVE.spring_23}}",
+            "fall_1": "{{i18n: NoCCSVE.fall_1}}",
+            "winter_24": "{{i18n: NoCCSVE.winter_24}}",
+            "spring_28": "{{i18n: spring_28}}",
+            "summer_1": "{{i18n: MarriageJoja.summer_1}}",
+            "summer_10": "{{i18n: summer_10}}",
+            "summer_27": "{{i18n: summer_27}}",
+            "fall_15": "{{i18n: fall_15}}",
+            "fall_26": "{{i18n: fall_26}}",
+            "fall_28": "{{i18n: fall_28}}",
+            "winter_1": "{{i18n: Marriage.winter_1}}",
+            "winter_7": "{{i18n: winter_7}}"
+    }
+    }
+    ]
+}

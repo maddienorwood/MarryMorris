@@ -1,0 +1,2373 @@
+{
+    "Format": "2.0.0",
+    "CustomLocations": [
+        {
+            "Name": "Custom_Yoshimax_MorrisLand",
+            "FromMapFile": "assets/Maps/MorrisLand.tmx"
+        },
+        {
+            "Name": "Custom_Yoshimax_MorrisHome",
+            "FromMapFile": "assets/Maps/MorrisHome.tmx"
+        }
+    ],
+    "Changes": [
+
+        {
+            //Adds Morris (1.6)
+            "Action": "EditData",
+            "Target": "Data/Characters",
+            "Entries": {
+                "MorrisTod": {
+                    "DisplayName": "{{i18n: Name}}",
+                    "BirthSeason": "Spring",
+                    "BirthDay": 2,
+                    "HomeRegion": "Town",
+                    "Gender": "Male",
+                    "Age": "Adult",
+                    "Manner": "Polite",
+                    "SocialAnxiety": "Neutral",
+                    "Optimism": "Positive",
+                    "IsDarkSkinned": false,
+                    "CanBeRomanced": true,
+                    "Calendar": "AlwaysShown",
+                    "SocialTab": "UnknownUntilMet",
+                    "CanSocialize": true,
+                    "CanVisitIsland": true,
+                    "EndSlideShow": "MainGroup",
+                    "ExcludeFromPerfectionScore": false,
+                    "WinterStarParticipant": true,
+                    "Home": [
+                        {
+                        "ID": "Custom_Yoshimax_MorrisHome",
+                        "Condition": null,
+                        "Location": "Custom_Yoshimax_MorrisHome",
+                        "Tile": {
+                            "X": 15,
+                            "Y": 5
+                        },
+                        "Direction": "right"
+                    }
+                    ],
+                    "SpouseRoom": {
+                        "MapAsset": "Custom_MorrisRoom",
+                        "MapSourceRect": {
+                          "X": 0,
+                          "Y": 0,
+                          "Width": 6,
+                          "Height": 9
+                        }
+                      },
+                      "SpousePatio": {
+                        "MapAsset": "Morris_Spouse_Area"
+                      }
+                }
+            }
+        },
+
+
+        //Dispositions/gift tastes/exclusions edits
+        /*{
+            //Adds Morris
+            "Action": "EditData",
+            "Target": "Data/NPCDispositions",
+            "Entries": {
+                "MorrisTod": "adult/polite/neutral/positive/male/datable/null/Other/spring 2//Custom_Yoshimax_MorrisHome 15 5/{{i18n: Name}}"
+                  }
+        },*/
+        //Adds Morris gift tastes when SVE not installed and CC not completed (Same as SVE w/ new dialogue)
+        {
+            "Action": "EditData",
+            "Target": "Data/NPCGiftTastes",
+            "When": {
+                "HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false",
+                "HasSeenEvent |contains=191393": "false"
+            },
+            "Entries": {
+                "MorrisTod": "{{i18n: LovedGift}}/730 727 432 578/{{i18n: LikedGift}}/72 348 430 428/{{i18n: DislikedGift}}/346 459 303 -81/{{i18n: HatedGift}}/167 -74/{{i18n: NeutralGift}}/-75 -79 -80/"
+            }
+        },
+        //Adds Morris gift tastes when CC completed (Same as SVE w/ new dialogue)
+        {
+            "Action": "EditData",
+            "Target": "Data/NPCGiftTastes",
+            "When": {
+                "HasSeenEvent |contains=191393": "true"
+            },
+            "Entries": {
+                "MorrisTod": "{{i18n: LovedGift}}/730 727 432 578/{{i18n: LikedGift}}/72 348 430 428/{{i18n: DislikedGift}}/346 459 303 -81/{{i18n: HatedGift}}/167 -74/{{i18n: NeutralGift}}/-75 -79 -80/"
+            }
+        },
+        //Changes Morris's exclusions (if SVE installed) or adds them (if SVE not installed)
+        {
+            "Action": "EditData",
+            "Target": "Data/CustomNPCExclusions",
+            "Entries": {
+                "MorrisTod": "ItemDelivery, ShopDialog, IslandVisit"
+            }
+        },
+        //Allows Morris to go to resort after CC complete on any day but Wednesday (can't go when on Joja route as he won't get time off)
+        {
+            "Action": "EditData",
+            "Target": "Data/CustomNPCExclusions",
+            "When": {
+                "HasSeenEvent |contains=191393": "true", "DayOfWeek": "Monday, Tuesday, Thursday, Friday, Saturday, Sunday"
+            },
+            "Entries": {
+                "MorrisTod": "ItemDelivery, ShopDialog"
+            }
+        },
+
+
+
+
+
+
+        //Events
+
+        //Morris 2 heart event when CC not completed
+        {
+            "Action": "EditData",
+            "Target": "Data/Events/SeedShop",
+            "When": {"HasSeenEvent |contains=191393": false, "IsCommunityCenterComplete": "false"},
+            "Entries": {
+                "2061663142/k 191393/f MorrisTod 500/e 3102768/w sunny/F/d Wed/t 1200 1700": "distantBanjo/6 18/Pierre 4 17 2 Morris -100 -100 0/skippable/emote Pierre 28/pause 500/speak Pierre \"{{i18n: 2h.1}}\"/warp Morris 6 29/move Morris 0 -10 0/textAboveHead Pierre \"{{i18n: 2h.2}}\"/move Morris -2 0 0/pause 500/speak Morris \"{{i18n: 2h.3}}\"/speak Pierre \"{{i18n: 2h.4}}\"/speak Morris \"{{i18n: 2h.5}}\"/showFrame Pierre 16/jump Pierre/pause 500/speak Pierre \"{{i18n: 2h.6}}\"/speak Morris \"{{i18n: 2h.7}}\"/pause 500/showFrame Pierre 0/speak Pierre \"{{i18n: 2h.8}}\"/jump Morris/pause 500/speak Morris \"{{i18n: 2h.9}}\"/speak Pierre \"{{i18n: 2h.10}}\"/speak Morris \"{{i18n: 2h.11}}\"/speak Pierre \"{{i18n: 2h.12}}\"/speak Morris \"{{i18n: 2h.13}}\"/speak Pierre \"{{i18n: 2h.14}}\"/pause 2000/globalFade/viewport -9999 -9999/end"
+            }
+        },
+        //Morris 4 heart event when CC not completed
+        {
+            "Action": "EditData",
+            "Target": "Data/Events/Saloon",
+            "When": {"HasSeenEvent |contains=191393": false, "IsCommunityCenterComplete": "false"},
+            "Entries": {
+                "772529467/k 191393/f MorrisTod 1000/e 2061663142/F/d Mon Tue Wed Thu Sat Sun/t 2000 2400": "distantBanjo/11 20/farmer 14 24 0 MorrisTod -30 -30 0 Clint 18 22 2 Marnie 9 22 3 Pam 7 18 1 Lewis 8 22 1 Pierre 4 22 2 Demetrius 3 23 1 Gus 14 18 2 Emily 16 18 3/skippable/move farmer 0 -3 3/faceDirection Pierre 1 true/move farmer -4 0 0/faceDirection Pierre 2 true/move farmer 0 -1 0/faceDirection Marnie 0 true/move Emily 2 0 1/faceDirection Marnie 3 true/pause 800/move Emily -2 0 0/pause 1000/faceDirection Clint 3 true/move Emily 2 0 1/warp MorrisTod 14 24/playSound doorClose/pause 500/move MorrisTod 0 -3 3/move MorrisTod -2 0 0/move MorrisTod 0 -1 0/move Gus -2 0 2/speak Gus \"{{i18n: 4h.1}}\"/move Emily -2 0 0/speak MorrisTod \"{{i18n: 4h.2}}\"/speak Gus \"{{i18n: 4h.3}}\"/speak MorrisTod \"{{i18n: 4h.4}}\"/move Emily 2 0 1/speak Gus \"{{i18n: 4h.5}}\"/move Gus 0 -1 0/pause 1000/move Gus 0 1 2/pause 500/speak Gus \"{{i18n: 4h.6}}\"/speak MorrisTod \"{{i18n: 4h.7}}\"/pause 500/faceDirection MorrisTod 1/faceDirection MorrisTod 2/faceDirection MorrisTod 3/textAboveHead MorrisTod \"{{i18n: 4h.8}}\"/move MorrisTod 0 1 2/move MorrisTod 1 0 1/move MorrisTod 0 2 3/move MorrisTod -4 0 0/textAboveHead MorrisTod \"{{i18n: 4h.9}}\"/faceDirection Lewis 2/faceDirection Marnie 2/move Emily -2 0 0/move Gus 3 0 0/move Gus 0 -1 0/textAboveHead Lewis \"{{i18n: 4h.10}}\"/pause 500/faceDirection Lewis 1/faceDirection Marnie 3/emote MorrisTod 28/pause 500/textAboveHead MorrisTod \"{{i18n: 4h.11}}\"/move MorrisTod 6 0 1/pause 500/textAboveHead Clint \"{{i18n: 4h.12}}\"/move Clint -4 0 2/move Clint 0 2 2/warp Clint -2320 -1949/pause 500/faceDirection MorrisTod 3/faceDirection Pierre 1/textAboveHead Pierre \"{{i18n: 4h.13}}\"/pause 500/faceDirection Pierre 2 true/emote MorrisTod 28/textAboveHead MorrisTod \"{{i18n: 4h.14}}\"/pause 500/move Emily 2 0 1/move Gus 0 1 3/move Gus -5 0 2/move MorrisTod 0 -1 1/move MorrisTod 2 0 2/question fork1 \"{{i18n: 4h.15}}\"/fork Leave/move farmer 0 1 2/move farmer 9 0 1/move farmer 0 2 3/pause 500/speak MorrisTod \"{{i18n: 4h.16}}\"/emote MorrisTod 32/emote farmer 32/friendship MorrisTod 50/pause 2000/globalFade/viewport -9999 -9999/end dialogue MorrisTod \"{{i18n: 4h.17}}\"",
+                "Leave": "move farmer 1 0 1/faceDirection MorrisTod 3 true/move farmer 0 1 2/move farmer 3 0 1/move farmer 0 3 2/playSound doorClose/warp farmer -200 -200/faceDirection MorrisTod 2 true/friendship MorrisTod -250/speak MorrisTod \"{{i18n: 4h.18}}\"/move MorrisTod -1 0 2/jump MorrisTod/playSound slimedead/pause 700/speak MorrisTod \"{{i18n: 4h.19}}\"/pause 200/move MorrisTod -2 0 2/move MorrisTod 0 2 2/playSound doorClose/warp MorrisTod -1000 -1000/globalFade/viewport -9999 -9999/end dialogue MorrisTod \"{{i18n: 4h.20}}\""
+            }
+
+        },
+        //Morris 6 heart event when CC not completed
+        {
+            "Action": "Load",
+            "Target": "Data/Events/Custom_Yoshimax_MorrisLand",
+            "FromFile": "assets/Dialogue/blank.json"
+        },
+        {
+            "Action": "EditData",
+            "Target": "Data/Events/Custom_Yoshimax_MorrisLand",
+            "When": {"HasSeenEvent |contains=191393": false, "IsCommunityCenterComplete": "false"},
+            "Entries": {
+                "177691807/k 191393/f MorrisTod 1500/e 772529467/z Winter/w sunny/t 800 1000": "playful/10 17/Morris 7 19 3 farmer -100 -100 0/skippable/
+                textAboveHead Morris \"{{i18n: 6h.1}}\"/pause 3000/warp farmer 14 24/textAboveHead Morris \"{{i18n: 6h.2}}\"/move farmer 0 -4 3/pause 2000/
+                faceDirection Morris 1/jump Morris/pause 500/textAboveHead Morris \"{{i18n: 6h.3}}\"/pause 500/speak Morris \"{{i18n: 6h.4}}\"/emote farmer 32/
+                pause 500/speak Morris \"{{i18n: 6h.5}}\"/pause 300/move Morris 7 0 1/move Morris 0 -1 0/playSound doorOpen/warp Morris -100 -100/move farmer 0 -2 0/
+                doAction 14 17/warp farmer -300 -300/changeLocation Custom_Yoshimax_MorrisHome/warp Morris 3 17/warp farmer 9 24/viewport 9 18 true/pause 1000/
+                move farmer 0 -7 0/pause 500/move farmer -5 0 3/faceDirection Morris 1/pause 500/speak Morris \"{{i18n: 6h.6}}\"/farmerEat 395/textAboveHead Morris \"{{i18n: 6h.7}}\"/
+                pause 3000/move farmer 10 0 0/emote farmer 8/pause 500/move Morris 9 0 1/speak Morris \"{{i18n: 6h.8}}\"/pause 500/move farmer 1 0 1/emote farmer 8/pause 500/
+                speak Morris \"{{i18n: 6h.9}}\"/pause 500/move farmer 0 4 2/move farmer -1 0 3/emote farmer 8/move Morris 0 3 2/textAboveHead Morris \"{{i18n: 6h.10}}\"/pause 500/
+                speak Morris \"{{i18n: 6h.11}}\"/pause 500/move farmer 0 2 2/move farmer -5 0 2/move farmer 0 1 2/warp farmer -100 -100/pause 2000/faceDirection Morris 1/
+                pause 500/faceDirection Morris 0/pause 500/faceDirection Morris 3/pause 500/faceDirection Morris 2/pause 500/emote Morris 28/speak Morris \"{{i18n: 6h.12}}\"/
+                pause 500/textAboveHead Morris \"{{i18n: 6h.10}}\"/pause 500/speak Morris \"{{i18n: 6h.13}}\"/globalFade/viewport -9999 -9999/end"
+            }
+        },
+        //Morris 8 heart event 
+        {
+            "Action": "EditData",
+            "Target": "Data/Events/Town",
+            "Entries": {
+                "436392981/f MorrisTod 2000/F/d Sat Sun/t 600 900": "sadpiano/47 87/Morris 47 88 0 farmer -100 -100 0/skippable/addObject 47 87 458/emote Morris 28/pause 2000/textAboveHead Morris \"{{i18n: 8h1.1}}\"/pause 500/speak Morris \"{{i18n: 8h1.2}}\"/pause 500/warp farmer 47 96/move farmer 0 -5 0/pause 1500/jump farmer/faceDirection Morris 2/jump Morris/textAboveHead Morris \"{{i18n: 8h1.3 |PlayerName={{PlayerName}} }}\"/pause 1000/speak Morris \"{{i18n: 8h1.4}}\"/question fork1 \"{{i18n: 8h1.5}}\"/fork SayNothing/speak Morris \"{{i18n: 8h1.6}}\"/move Morris -2 0 3/move farmer 0 -3 0/move farmer 1 0 3/emote farmer 8/pause 500/faceDirection Morris 1/speak Morris \"{{i18n: 8h1.7}}\"/faceDirection Morris 3/emote Morris 28/pause 500/faceDirection Morris 1/pause 500/speak Morris \"{{i18n: 8h1.8}}\"/pause 500/emote Morris 32/emote farmer 32/pause 500/move Morris 2 0 1/move Morris 0 11 2/warp Morris -100 -100/globalFade/viewport -9999 -9999/end",
+                "SayNothing": "pause 500/speak Morris \"{{i18n: 8h1.9}}\"/move Morris -2 0 3/move farmer 0 -3 0/move farmer 1 0 3/emote farmer 8/pause 500/faceDirection Morris 1/speak Morris \"{{i18n: 8h1.7}}\"/faceDirection Morris 3/emote Morris 28/pause 500/faceDirection Morris 1/pause 500/speak Morris \"{{i18n: 8h1.8}}\"/pause 500/emote Morris 32/emote farmer 32/pause 500/move Morris 2 0 1/move Morris 0 11 2/warp Morris -100 -100/globalFade/viewport -9999 -9999/end"
+            }
+        },
+        //Morris 10 heart event when CC completed
+        {
+            "Action": "EditData",
+            "Target": "Data/Events/Saloon",
+            "When": {"HasSeenEvent |contains=191393": true, "IsCommunityCenterComplete": "true", "Relationship:MorrisTod": "Dating, Married"},
+            "Entries": {
+                "2109498809/f MorrisTod 2500/e 436392981/d Sat/t 1800 2300": "distantBanjo/11 20/farmer -30 -30 0 Morris -100 -100 0 Shane 11 20 0 Marnie 9 22 3 Pam 7 18 1 Lewis 8 22 1 Pierre 4 22 2 Demetrius 3 23 1 Gus 14 18 2 Emily 16 18 3/skippable/move Emily 2 0 1/faceDirection Marnie 3 true/pause 500/warp farmer 14 24/playSound doorClose/faceDirection Pierre 1/faceDirection Pierre 2 true/move farmer 0 -3 0/move farmer -4 0 3/move farmer 0 -1 0/move farmer -5 0 3/move farmer 0 -1 0/move farmer -1 0 2/textAboveHead Lewis \"{{i18n: 10hcc.1 |PlayerName={{PlayerName}} }}\"/pause 500/warp Morris 14 24/playSound doorClose/faceDirection Marnie 1/faceDirection Marnie 3 true/move Morris 0 -3 0/move Morris -4 0 3/move Morris 0 -1 0/move Morris -5 0 3/move Emily -2 0 2/pause 500/textAboveHead Pierre \"{{i18n: 10hcc.2}}\"/pause 1000/move Emily 2 0 1/textAboveHead Emily \"{{i18n: 10hcc.3 |PlayerName={{PlayerName}} }}\"/pause 1000/faceDirection Morris 1 true/textAboveHead Morris \"{{i18n: 10hcc.4}}\"/pause 1000/faceDirection Morris 3 true/move Emily -2 0 2/speak Morris \"{{i18n: 10hcc.5}}\"/pause 500/speak Morris \"{{i18n: 10hcc.6}}\"/move Emily 0 -1 0/move Emily -11 0 3/move Emily 0 1 2/faceDirection Morris 0 true/faceDirection farmer 1 true/speak Emily \"{{i18n: 10hcc.7}}\"/speak Morris \"{{i18n: 10hcc.8}}\"/quickQuestion {{i18n: 10hcc.9}}(break)speak Emily \"{{i18n: 10hcc.10}}\"(break)speak Emily \"{{i18n: 10hcc.11}}\"/faceDirection Morris 3/faceDirection farmer 2/textAboveHead Morris \"{{i18n: 10hcc.12}}\"/move Emily 0 -1 0/move Emily 11 0 0/move Shane -4 0 3/speak Shane \"{{i18n: 10hcc.13}}\"/pause 400/faceDirection Morris 1 true/faceDirection farmer 1/speak Morris \"{{i18n: 10hcc.14}}\"/emote Shane 12/speak Shane \"{{i18n: 10hcc.15}}\"/speak Morris \"{{i18n: 10hcc.16}}\"/speak Shane \"{{i18n: 10hcc.17}}\"/faceDirection Morris 0/speak Morris \"{{i18n: 10hcc.18}}\"/move farmer 2 0 1/move farmer 0 4 0/move Shane -1 0 3/faceDirection Morris 1/pause 1000/emote Morris 16/speak Shane \"{{i18n: 10hcc.19}}\"/pause 500/speak Morris \"{{i18n: 10hcc.20}}\"/speak Shane \"{{i18n: 10hcc.21}}\"/speak Morris \"{{i18n: 10hcc.22}}\"/pause 500/faceDirection Pam 2 true/faceDirection Pierre 0 true/faceDirection Demetrius 0 true/faceDirection Lewis 3 true/faceDirection Marnie 3 true/faceDirection Gus 3 true/faceDirection farmer 0 true/faceDirection Emily 3 true/pause 1000/textAboveHead Morris \"{{i18n: 10hcc.23}}\"/pause 1000/faceDirection Morris 0/pause 1000/faceDirection Morris 2/pause 1000/faceDirection Morris 1/pause 1000/emote Morris 28/pause 500/speak Morris \"{{i18n: 10hcc.24}}\"/speak Shane \"{{i18n: 10hcc.25}}\"/speak Morris \"{{i18n: 10hcc.26}}\"/speak Shane \"{{i18n: 10hcc.27}}\"/speak Morris \"{{i18n: 10hcc.28}}\"/speak Shane \"{{i18n: 10hcc.29}}\"/move Shane 6 0 1/move Shane 0 1 2/move Shane 2 0 1/move Shane 0 3 2/playSound doorClose/warp Shane -100 -100/textAboveHead Morris \"{{i18n: 10hcc.30}}\"/beginSimultaneousCommand/faceDirection Pam 1/faceDirection Pierre 2/faceDirection Demetrius 1/faceDirection Lewis 1/faceDirection Marnie 3/faceDirection Gus 2/faceDirection farmer 0/faceDirection Emily 0/endSimultaneousCommand/move Morris 1 0 3/move farmer -1 0 0/move farmer 0 -3 1/speak Morris \"{{i18n: 10hcc.31}}\"/beginSimultaneousCommand/showFrame 101/showFrame Morris 40/endSimultaneousCommand/positionOffset Morris -1 0/pause 30/positionOffset Morris -1 -2/pause 30/positionOffset Morris -1 -2/pause 30/positionOffset Morris -1 0/pause 30/positionOffset Morris -1 0/pause 30/positionOffset Morris -1 0/pause 30/positionOffset Morris -1 0/pause 30/positionOffset Morris -1 0/emote Morris 20/emote farmer 20/pause 1000/globalFade/viewport -9999 -9999/end"
+            }
+        },
+        {
+        //Morris 9 and 10 heart event (when CC route not taken and SVE installed)
+            "Action": "EditData",
+            "Target": "Data/Events/Jojamart",
+            "When": {"HasSeenEvent |contains=191393": false, "HasMod |contains=FlashShifter.StardewValleyExpandedCP": "true", "Relationship:MorrisTod": "Dating, Married"},
+            "Entries": {
+                "1375114563/f MorrisTod 2250/e 177691807/u 5 12 19 26/t 2000 2200":"distantBanjo/23 26/farmer 22 26 1 Morris 24 26 3/skippable/pause 500/speak Morris \"{{i18n: 8h2.1}}\"/pause 200/quickQuestion {{i18n: 8h2.2}}(break)speak Morris \"{{i18n: 8h2.3}}\"(break)speak Morris \"{{i18n: 8h2.4}}\"/pause 500/textAboveHead Morris \"{{i18n: 8h2.5}}\"/pause 200/jump Morris/pause 400/speak Morris \"{{i18n: 8h2.6}}\"/pause 500/speak Morris \"{{i18n: 8h2.7}}\"/pause 600/speak Morris \"{{i18n: 8h2.8}}\"/pause 500/speak Morris \"{{i18n: 8h2.9}}\"/pause 500/end",
+                "1697318678/f MorrisTod 2500/e 1375114563/u 6 7 13 14 20 21 27 28/t 2000 2200":"distantBanjo/23 26/farmer 22 26 1 Morris 24 26 3/skippable/pause 500/speak Morris \"{{i18n: 10hj.1}}\"/pause 500/emote farmer 32/textAboveHead Morris \"{{i18n: 10hj.2}}\"/pause 200/fade/pause 1000/fade unfade/speak Morris \"{{i18n: 10hj.3}}\"/pause 300/speak Morris \"{{i18n: 10hj.4}}\"/pause 300/speak Morris \"{{i18n: 10hj.5}}\"/pause 500/speak Morris \"{{i18n: 10hj.6}}\"/emote Morris 20/emote farmer 20/pause 500/speak Morris \"{{i18n: 10hj.7}}\"/jump farmer/speak Morris \"{{i18n: 10hj.8}}\"/pause 300/move farmer 0 2 2/move farmer 2 0 1/beginSimultaneousCommand/move Morris 1 0 3/move farmer 0 -2 1/endSimultaneousCommand/beginSimultaneousCommand/showFrame 101/showFrame Morris 40/endSimultaneousCommand/positionOffset Morris -1 0/pause 30/positionOffset Morris -1 -2/pause 30/positionOffset Morris -1 -2/pause 30/positionOffset Morris -1 0/pause 30/positionOffset Morris -1 0/pause 30/positionOffset Morris -1 0/pause 30/positionOffset Morris -1 0/pause 30/positionOffset Morris -1 0/pause 500/end newDay"
+            }
+        },
+        //Loads Morris 8, and 10 heart events (when CC not completed and SVE not installed)
+        {
+            "Action": "Load",
+            "Target": "Data/Events/Jojamart",
+            "When": {"HasSeenEvent |contains=191393": false, "HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false", "Relationship:MorrisTod": "Dating, Married"},
+            "FromFile": "assets/Dialogue/blank.json"
+        },
+        {
+            "Action": "EditData",
+            "Target": "Data/Events/Jojamart",
+            "When": {"HasSeenEvent |contains=191393": false, "HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false", "Relationship:MorrisTod": "Dating, Married"},
+            "Entries": {
+                "1375114563/f MorrisTod 2250/e 177691807/u 5 12 19 26/t 2100 2300":"distantBanjo/20 21/farmer 20 21 1 Morris 22 21 3/skippable/pause 500/speak Morris \"{{i18n: 8h2.1}}\"/pause 200/quickQuestion {{i18n: 8h2.2}}(break)speak Morris \"{{i18n: 8h2.3}}\"(break)speak Morris \"{{i18n: 8h2.4}}\"/pause 500/textAboveHead Morris \"{{i18n: 8h2.5}}\"/pause 200/jump Morris/pause 400/speak Morris \"{{i18n: 8h2.6}}\"/pause 500/speak Morris \"{{i18n: 8h2.7}}\"/pause 600/speak Morris \"{{i18n: 8h2.8}}\"/pause 500/speak Morris \"{{i18n: 8h2.9}}\"/pause 500/end",
+                "1697318678/f MorrisTod 2500/e 1375114563/u 6 7 13 14 20 21 27 28/t 2100 2230":"distantBanjo/21 24/farmer 20 24 1 Morris 22 24 3/skippable/pause 500/speak Morris \"{{i18n: 10hj.1}}\"/pause 500/emote farmer 32/textAboveHead Morris \"{{i18n: 10hj.2}}\"/pause 200/fade/pause 1000/fade unfade/speak Morris \"{{i18n: 10hj.3}}\"/pause 300/speak Morris \"{{i18n: 10hj.4}}\"/pause 300/speak Morris \"{{i18n: 10hj.5}}\"/pause 500/speak Morris \"{{i18n: 10hj.6}}\"/emote Morris 20/emote farmer 20/pause 500/speak Morris \"{{i18n: 10hj.7}}\"/jump farmer/speak Morris \"{{i18n: 10hj.8}}\"/pause 300/move farmer 1 0 1/beginSimultaneousCommand/showFrame 101/showFrame Morris 40/endSimultaneousCommand/positionOffset Morris -1 0/pause 30/positionOffset Morris -1 -2/pause 30/positionOffset Morris -1 -2/pause 30/positionOffset Morris -1 0/pause 30/positionOffset Morris -1 0/pause 30/positionOffset Morris -1 0/pause 30/positionOffset Morris -1 0/pause 30/positionOffset Morris -1 0/pause 500/end newDay"
+            }
+        },
+        //Morris 14 heart event - Letter
+        {
+            "Action": "EditData",
+            "Target": "Data/Events/Farm",
+            "When": {"HasSeenEvent": "1697318678, 2109498809"},
+            "Entries": {
+                "1437932561/f MorrisTod 3500": "none/-9999 -9999/farmer 0 0 2/mail Morris14Heart/end"
+            }
+        },
+        //Morris letter
+        {
+            "Action": "EditData",
+            "Target": "Data/mail",
+            "Entries": {
+                "Morris14Heart": "{{i18n: letter |PlayerName={{PlayerName}} }}"
+            }
+        },
+        //Morris 14 heart event
+        {
+            "Action": "EditData",
+            "Target": "Data/Events/Beach",
+            "Entries": {
+                "1437932562/f MorrisTod 3500/d Mon Tue Wed Thu Fri/F/w sunny/t 1800 2300/n Morris14Heart": "starshoot/32 18/Morris 31 17 2 farmer 38 0 2/skippable/move farmer 0 17 2/faceDirection Morris 1/move farmer -5 0 3/emote Morris 32/pause 500/speak Morris \"{{i18n: 14h.1}} [730]\"/pause 500/textAboveHead Morris \"{{i18n: 14h.2}}\"/pause 1000/textAboveHead Morris \"{{i18n: 14h.3}}\"/pause 2500/emote farmer 32/emote Morris 32/pause 500/speak Morris \"{{i18n: 14h.4}}\"/globalFade/viewport -999 -999/ambientLight 200 240 60/warp farmer 45 23/warp Morris 46 23/faceDirection farmer 1/faceDirection Morris 3/playMusic starshoot/viewport 45 22/pause 1000/speak Morris \"{{i18n: 14h.5}}\"/pause 1000/globalFade/viewport -999 -999/playMusic 50s/changeToTemporaryMap Custom_Yoshimax_MorrisPhotos/warp farmer 15 16/warp Morris 16 16/faceDirection farmer 0/faceDirection Morris 0/viewport 15 15/pause 3000/speak Morris \"{{i18n: 14h.6}}\"/pause 1000/globalFade/viewport -999 -999/warp farmer 39 16/faceDirection farmer 0/warp Morris 36 16/faceDirection Morris 1/viewport 37 15/pause 2000/speak Morris \"{{i18n: 14h.7}}\"/pause 1000/globalFade/viewport -999 -999/warp Morris 60 16/warp farmer 60 14/showFrame Morris 44/faceDirection farmer 2/viewport 60 15/pause 2000/speak Morris \"{{i18n: 14h.8}}\"/pause 1000/globalFade/viewport -999 -999/warp Morris 79 15/faceDirection Morris 1/warp farmer 82 15/faceDirection farmer 3/addObject 81 14 458/viewport 80 15/pause 3000/speak Morris \"{{i18n: 14h.9}}\"/pause 1000/globalFade/viewport -999 -999/warp farmer 102 14/warp Morris 103 14/faceDirection farmer 1/faceDirection Morris 3/showFrame 101/showFrame Morris 40/positionOffset farmer 10 6/positionOffset Morris -8 -3/viewport 102 15/pause 3000/speak Morris \"{{i18n: 14h.10}}\"/pause 1000/globalFade/viewport -9999 -9999/speak Morris \"{{i18n: 14h.11}}\"/pause 3000/end"
+            }
+        },
+        
+        //Morris's modified Community Center event where he stays (no SVE)
+        {
+            "Action": "EditData",
+            "Target": "Data/Events/Town",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false"},
+            "Entries": {
+                "191393/Hn ccFishTank/Hn ccBulletin/Hn ccPantry/Hn ccVault/Hn ccBoilerRoom/Hn ccCraftsRoom/Hl jojaFishTank/Hl jojaPantry/Hl jojaVault/Hl jojaBoilerRoom/Hl jojaCraftsRoom/Hl JojaMember/w sunny/H": "junimoStarSong/-1000 -1000/farmer -100 -100 0 Evelyn 56 21 0 Lewis 52 33 0 Morris -2000 -2000 0 Jas 62 16 2 Vincent 46 23 1 Emily -2000 -2000 0 Gus -2000 -2000 0 Caroline -2000 -2000 2 Robin -2000 -2000 2 Demetrius -2000 -2000 0 Clint -2000 -2000 0 Pierre -2000 -2000 1 Jodi -2000 -2000 3 Gunther -2000 -2000 0 Willy -2000 -2000 0 Pam -2000 -2000 3 George -2000 -2000 2/broadcastEvent/addConversationTopic cc_Complete/specificTemporarySprite ccCelebration/animate Jas false true 90 16 17 18 19/animate Evelyn true false 500 17 18 17 19 19 19 19/viewport 53 25 true/viewport move 0 -1 8000/move Vincent 1 0 2/move Vincent 0 1 1/move Lewis 0 -9 0 true/move Vincent 8 0 0 false/pause 1000/skippable/jump Vincent/pause 1000/speed Vincent 4/move Vincent 0 15 0/pause 3000/globalFade/viewport -1000 -1000/warp Lewis 32 22/warp Jas -2000 -2000/warp Evelyn -2000 -2000/warp Vincent -2000 -2000/warp Gunther 24 17/warp Gus 5 5/advancedMove Gus true -2 0 4 2000 4 0 4 3000 -2 0 4 2000/warp Pam 8 9/advancedMove Pam true 3 5000 1 0 0 -4 -1 0 4 1000 1 0 0 4 -1 0/warp Emily 16 19/advancedMove Emily true 2 0 2 8000 -2 0 4 3000/warp Pierre 23 10/warp Caroline 24 9/warp Jodi 25 10/warp Willy 40 10/advancedMove Willy true 2 0 4 3000 -3 0 4 3000 1 0 4 3000/warp George 42 18/warp Robin 10 25/advancedMove Robin false 1 0 2 2000 0 -13 16 0 0 -3/warp Clint 46 13/advancedMove Clint false -1 0 4 14000 10 0 0 6 7 0 0 -5/warp Demetrius 47 5/changeLocation CommunityCenter/viewport 7 10 true/viewport move 2 0 21500/pause 6000/move Lewis 0 -12 2/pause 10000/globalFade/viewport -1000 -1000/warp farmer 32 20/move farmer 0 -9 0 true/viewport 32 10 true/pause 5000/speak Lewis \"{{i18n: cc.1}}\"/pause 800/emote Lewis 32/pause 1000/speak Lewis \"{{i18n: cc.2}}\"/pause 1000/awardFestivalPrize hero/null/itemAboveHead hero/null/pause 1000/faceDirection farmer 0/playMusic none/message \"{{i18n: cc.3}}\"/pause 500/textAboveHead Lewis \"{{i18n: cc.4}}\"/faceDirection farmer 2 true/move Lewis 1 0 2/move Lewis 0 1 2/pause 500/speak Morris \"{{i18n: cc.5}}\"/playSound doorClose/warp Morris 32 23/textAboveHead Lewis \"{{i18n: cc.6}}\"/move Morris 0 -9 2/pause 500/faceDirection Morris 1/pause 500/playSound dwop/faceDirection Morris 0 true/pause 50/faceDirection Morris 3/pause 500/showFrame Morris 19/shake Morris 1000/textAboveHead Morris \"{{i18n: cc.7}}\"/pause 500/speak Morris \"{{i18n: cc.8}}\"/move Pierre 0 4 1/textAboveHead Pierre \"{{i18n: cc.9}}\"/move Pierre 4 0 1/move Pierre 4 0 1/question fork1 \"{{i18n: cc.10}}\"/fork Punch/showFrame Morris 12/textAboveHead Morris \"{{i18n: cc.11}}\"/pause 1000/speak Morris \"{{i18n: cc.12}}\"/pause 1000/speak Pierre \"{{i18n: cc.13}}\"/faceDirection Pierre 3/textAboveHead Pierre \"{{i18n: cc.14}}\"/pause 1500/globalFade/viewport -1000 -1000/stopAdvancedMoves/warp Demetrius 35 14/faceDirection Clint 3/faceDirection Demetrius 3 true/warp Pam 28 15/faceDirection Pam 1 true/warp Gus 28 14/faceDirection Gus 1 true/warp Robin 36 15/faceDirection Robin 3/warp Emily 29 9/faceDirection Emily 2 true/warp Willy 35 16/faceDirection Willy 3 true/warp Jodi 36 9/faceDirection Jodi 2 true/warp Caroline 35 9/faceDirection Caroline 2 true/warp Clint 37 13/faceDirection Clint 3 true/warp Gunther 30 18/warp George 28 16/faceDirection George 1 true/viewport 32 10 true/faceDirection Pierre 2/faceDirection Pierre 3/faceDirection Pierre 0/faceDirection Pierre 3/pause 1000/speak Pierre \"{{i18n: cc.15}}\"/pause 1000/playMusic musicboxsong/move Pierre 0 2 3/speak Pierre \"{{i18n: cc.16}}\"/pause 500/faceDirection George 2/pause 500/showFrame George 16/textAboveHead George \"{{i18n: cc.17}}\"/move Pierre 0 -2 0/speak Pierre \"{{i18n: cc.18}}\"/pause 1000/speak Emily \"{{i18n: cc.19}}\"/move Pierre 0 1 1/textAboveHead Pierre \"{{i18n: cc.20}}\"/pause 500/textAboveHead Willy \"{{i18n: cc.21}}\"/pause 1000/speak Pierre \"{{i18n: cc.22}}\"/pause 500/speak Willy \"{{i18n: cc.23}}\"/faceDirection Pierre 3/speak Pierre \"{{i18n: cc.24}}\"/speak Gus \"{{i18n: cc.25}}\"/pause 100/textAboveHead Robin \"{{i18n: cc.26}}\"/faceDirection Pierre 0/playMusic none/speak Pierre \"{{i18n: cc.27}}\"/jump Morris/showFrame Morris 19/pause 1000/textAboveHead Pierre \"{{i18n: cc.28}}\"/pause 3000/showFrame George 0/playMusic springtown/pause 4000/move George 1 0 1/speak George \"{{i18n: cc.29}}\"/pause 500/shake Morris 5000/textAboveHead Demetrius \"{{i18n: cc.30}}\"/pause 250/textAboveHead Jodi \"{{i18n: cc.31}}\"/shake Morris 5000/faceDirection Morris 0 true/jump Morris/pause 500/textAboveHead Gus \"{{i18n: cc.32}}\"/pause 500/textAboveHead Gunther \"{{i18n: cc.33}}\"/textAboveHead Robin \"{{i18n: cc.34}}\"/pause 2000/speak Morris \"{{i18n: cc.35}}\"/pause 2000/speed Morris 4/shake Morris 5000/move Morris 0 12 2/playSound doorClose/faceDirection Robin 2 true/faceDirection Demetrius 2 true/pause 20/faceDirection Gunther 2 true/pause 30/faceDirection George 2 true/pause 5000/move Morris 0 -8 0/playMusic none/message \"{{i18n: cc.36}}\"/pause 500/textAboveHead Lewis \"{{i18n: cc.37}}\"/playSound doorClose/move Morris 0 -4 3/move Pierre 0 0 1/speak Morris \"{{i18n: cc.38}}\"/shake Pierre 5000/speak Pierre \"{{i18n: cc.39}}\"/speak Morris \"{{i18n: cc.40}}\"/shake Pierre 5000/shake Lewis 5000/speak Pierre \"{{i18n: cc.41}}\"/jump Morris/pause 600/speak Morris \"{{i18n: cc.42}}\"/jump Emily/jump Demetrius/jump Lewis/textAboveHead Emily \"{{i18n: cc.43}}\"/textAboveHead George \"{{i18n: cc.44}}\"/textAboveHead Clint \"{{i18n: cc.45}}\"/pause 700/speak Lewis \"{{i18n: cc.46}}\"/textAboveHead Morris \"{{i18n: cc.47}}\"/pause 500/speak Morris \"{{i18n: cc.48}}\"/jump Pierre/textAboveHead Pierre \"{{i18n: cc.49}}\"/pause 500/speak Pierre \"{{i18n: cc.50}}\"/shake Morris 2000/speak Morris \"{{i18n: cc.51}}\"/pause 2000/textAboveHead Gunther \"{{i18n: cc.52}}\"/textAboveHead Willy \"{{i18n: cc.53}}\"/textAboveHead Jodi \"{{i18n: cc.54}}\"/pause 500/speak Pierre \"{{i18n: cc.55}}\"/speak Morris \"{{i18n: cc.56}}\"/pause 1000/speak Pierre \"{{i18n: cc.57}}\"/jump Morris/speak Morris \"{{i18n: cc.58}}\"/pause 1500/playMusic springtown/move Lewis 0 1 2/speak Lewis \"{{i18n: cc.59}}\"/speak Morris \"{{i18n: cc.60}}\"/emote Lewis 32/emote Morris 32/pause 2000/globalFade/viewport -9999 -9999/pause 4000/message \"{{i18n: cc.61}}\"/pause 2000/end"
+              }
+        },
+        {
+            "Action": "EditData",
+            "Target": "Data/Events/CommunityCenter",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false"},
+            "Entries": {
+                 "Punch": "pause 100/move George 0 -3 3 true/showFrame Morris 12/textAboveHead Morris \"{{i18n: cc.62}}\"/pause 500/speak Morris \"{{i18n: cc.63}}\"/shake Pierre 500/pause 1000/move George -5 0 3 true/speak Pierre \"{{i18n: cc.64}}\"/pause 500/speak Morris \"{{i18n: cc.65}}\"/playMusic event1/pause 2000/animate Pierre false true 200 20 21/positionOffset Pierre 8 8/pause 1500/speak Morris \"{{i18n: cc.66}}\"/move Morris 0 1 2/speak Pierre \"{{i18n: cc.67}}\"/faceDirection Morris 1 true/pause 50/faceDirection Morris 0/pause 500/speak Morris \"{{i18n: cc.68}}\"/speed Morris 4/move Morris 0 -1 3/showFrame Morris 20/positionOffset Morris -4 -4/animate Morris false true 200 20 21/pause 2000/stopAnimation Morris/showFrame Morris 22/playSound clubhit/stopAnimation Pierre/showFrame Pierre 22/pause 500/jump Caroline/textAboveHead Caroline \"{{i18n: cc.69}}\"/speed Caroline 4/move Caroline 0 4 1 true/animate Morris false true 200 20 21/animate Pierre false true 200 20 21/pause 1000/jump Robin/showFrame Robin 19/textAboveHead George \"{{i18n: cc.70}}\"/pause 1000/jump Lewis/stopAnimation Morris/showFrame Morris 22/playSound clubhit/shake Pierre 200/stopAnimation Pierre/showFrame Pierre 22/pause 500/animate Morris false true 200 20 21/animate Pierre false true 200 20 21/pause 2000/stopAnimation Morris/showFrame Morris 22/playSound clubhit/shake Pierre 200/stopAnimation Pierre/showFrame Pierre 22/pause 500/jump Caroline/speak Morris \"{{i18n: cc.71}}\"/animate Morris false true 200 20 21/animate Pierre false true 200 20 21/pause 2000/speak Pierre \"{{i18n: cc.72}}\"/pause 1000/stopAnimation Morris/showFrame Morris 22/playSound clubhit/shake Pierre 200/stopAnimation Pierre/showFrame Pierre 22/pause 500/animate Morris false true 200 20 21/animate Pierre false true 200 20 21/pause 1000/pause 500/textAboveHead George \"{{i18n: cc.73}}\"/pause 2000/stopAnimation Pierre/stopAnimation Morris/showFrame Pierre 17/showFrame Morris 20/pause 100/showFrame Pierre 18/showFrame Morris 23/playSound clubhit/shake Morris 250/pause 50/showFrame Pierre 17/showFrame Morris 20/pause 1000/showFrame Morris 20/pause 100/showFrame Pierre 18/showFrame Morris 23/playSound clubhit/shake Morris 250/pause 50/showFrame Morris 20/showFrame Pierre 17/pause 1000/showFrame Morris 20/pause 100/showFrame Pierre 18/showFrame Morris 23/playSound clubhit/shake Morris 250/pause 50/showFrame Morris 20/showFrame Pierre 17/pause 1000/shake Pierre 1000/showFrame Morris 19/pause 1000/showFrame Pierre 17/positionOffset Pierre 4 0/pause 100/positionOffset Pierre 4 0/showFrame Pierre 18/pause 100/positionOffset Pierre 4 0/showFrame Pierre 19/playSound clubSmash/warp Morris 34 23/specificTemporarySprite morrisFlying/pause 2000/playSound barrelBreak/showFrame Pierre 4/pause 2000/move Pierre 1 0 0/pause 1000/playSound dwop/faceDirection Pierre 1 true/pause 50/faceDirection Pierre 2/pause 100/showFrame Pierre 23/playSound stoneStep/pause 5000/showFrame Pierre 4/playMusic none/message \"{{i18n: cc.36}}\"/pause 500/textAboveHead Lewis \"{{i18n: cc.37}}\"/playSound doorClose/move Morris 0 -9 3/move Pierre 0 0 1/speak Morris \"{{i18n: cc.38}}\"/shake Pierre 2000/speak Pierre \"{{i18n: cc.39}}\"/speak Morris \"{{i18n: cc.40}}\"/shake Pierre 2000/shake Lewis 2000/speak Pierre \"{{i18n: cc.41}}\"/jump Morris/pause 600/speak Morris \"{{i18n: cc.74}}\"/jump Robin/jump Gunther/jump Lewis/textAboveHead Robin \"{{i18n: cc.43}}\"/textAboveHead George \"{{i18n: cc.44}}\"/textAboveHead Gunther \"{{i18n: cc.45}}\"/pause 700/speak Lewis \"{{i18n: cc.46}}\"/textAboveHead Morris \"{{i18n: cc.47}}\"/pause 500/speak Morris \"{{i18n: cc.48}}\"/jump Pierre/textAboveHead Pierre \"{{i18n: cc.49}}\"/pause 500/speak Pierre \"{{i18n: cc.50}}\"/showFrame Pierre 20/shake Morris 2000/pause 1000/speak Morris \"{{i18n: cc.75}}\"/pause 2000/showFrame Pierre 4/textAboveHead Gunther \"{{i18n: cc.52}}\"/textAboveHead Willy \"{{i18n: cc.53}}\"/textAboveHead Jodi \"{{i18n: cc.54}}\"/pause 500/speak Pierre \"{{i18n: cc.55}}\"/speak Morris \"{{i18n: cc.56}}\"/pause 1000/speak Pierre \"{{i18n: cc.57}}\"/jump Morris/speak Morris \"{{i18n: cc.58}}\"/pause 1500/playMusic springtown/move Lewis 0 1 2/speak Lewis \"{{i18n: cc.59}}\"/speak Morris \"{{i18n: cc.60}}\"/emote Lewis 32/emote Morris 32/pause 2000/globalFade/viewport -9999 -9999/pause 4000/message \"{{i18n: cc.61}}\"/pause 2000/end position 52 20"
+             }
+        },
+        
+        //Morris's modified Community Center event where he stays (SVE)
+        {
+            "Action": "EditData",
+            "Target": "Data/Events/Town",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "true"},
+            "Entries": {
+                "191393/Hn ccFishTank/Hn ccBulletin/Hn ccPantry/Hn ccVault/Hn ccBoilerRoom/Hn ccCraftsRoom/Hl jojaFishTank/Hl jojaPantry/Hl jojaVault/Hl jojaBoilerRoom/Hl jojaCraftsRoom/Hl JojaMember/w sunny/H": "junimoStarSong/-1000 -1000/farmer -100 -100 0 Olivia -2000 -2000 1 Andy -2000 -2000 1 Susan -2000 -2000 3 Evelyn 56 21 0 Lewis 52 33 0 Morris -2000 -2000 0 Jas 62 16 2 Vincent 46 23 1 Emily -2000 -2000 0 Gus -2000 -2000 0 Caroline -2000 -2000 3 Robin -2000 -2000 2 Demetrius -2000 -2000 0 Clint -2000 -2000 0 Pierre -2000 -2000 0 Jodi -2000 -2000 2 Gunther -2000 -2000 0 Willy -2000 -2000 0 Pam -2000 -2000 3 George -2000 -2000 0 Evelyn -2000 -2000 0/broadcastEvent/addConversationTopic cc_Complete/specificTemporarySprite ccCelebration/animate Jas false true 90 16 17 18 19/animate Evelyn true false 500 17 18 17 19 19 19 19/viewport 53 25 true/viewport move 0 -1 8000/skippable/move Vincent 1 0 2/move Vincent 0 1 1/move Lewis 0 -9 0 true/move Vincent 8 0 0 false/pause 1000/jump Vincent/pause 1000/speed Vincent 4/move Vincent 0 15 0/pause 3000/globalFade/viewport -1000 -1000/warp Lewis 32 22/warp Jas -2000 -2000/warp Evelyn -2000 -2000/warp Vincent -2000 -2000/warp Gunther 24 17/warp Gus 5 5/advancedMove Gus true -2 0 4 2000 4 0 4 3000 -2 0 4 2000/warp Pam 8 9/advancedMove Pam true 3 5000 1 0 0 -4 -1 0 4 1000 1 0 0 4 -1 0/warp Emily 16 19/advancedMove Emily true 2 0 2 8000 -2 0 4 3000/warp Pierre 25 11/warp Caroline 26 10/warp Olivia 24 10/warp Andy 37 16/Warp Susan 39 16/warp Jodi 25 9/warp Willy 40 10/advancedMove Willy true 2 0 4 3000 -3 0 4 3000 1 0 4 3000/warp George 33 10/warp Evelyn 32 10/warp Robin 11 24/advancedMove Robin false 1 0 2 2000 0 -12 16 0 0 -3/warp Clint 46 13/advancedMove Clint false -1 0 4 14000 10 0 0 6 7 0 0 -5/warp Demetrius 47 5/changeLocation CommunityCenter/viewport 7 10 true/viewport move 2 0 21500/pause 6000/move Lewis 0 -10 2/pause 10000/globalFade/viewport -1000 -1000/warp farmer 32 20/move farmer 0 -7 0 true/viewport 32 10 true/pause 5000/speak Lewis \"{{i18n: cc.1}}\"/pause 800/emote Lewis 32/pause 1000/speak Lewis \"{{i18n: cc.2}}\"/pause 1000/awardFestivalPrize hero/null/itemAboveHead hero/null/pause 1000/faceDirection farmer 0/playMusic none/message \"{{i18n: cc.3}}\"/pause 500/textAboveHead Lewis \"{{i18n: cc.4}}\"/faceDirection farmer 2 true/move Lewis 1 0 2/move Lewis 0 1 2/pause 500/speak Morris \"{{i18n: cc.5}}\"/playSound doorClose/warp Morris 32 23/textAboveHead Lewis \"{{i18n: cc.6}}\"/move Morris 0 -8 0/pause 900/faceDirection Morris 1/pause 900/faceDirection Morris 0 true/pause 500/faceDirection Morris 3/pause 250/faceDirection Pierre 2/pause 450/playSound dwop/showFrame Morris 19/shake Morris 1000/textAboveHead Morris \"{{i18n: cc.7}}\"/pause 500/speak Morris \"{{i18n: cc.8}}\"/move Pierre 0 3 1/textAboveHead Pierre \"{{i18n: cc.9}}\"/move Pierre 3 0 1/move Pierre 2 0 2/move Pierre 0 1 1/move Pierre 1 0 1/question fork1 \"{{i18n: cc.10}}\"/fork Punch/showFrame Morris 12/textAboveHead Morris \"{{i18n: cc.11}}\"/pause 1000/speak Morris \"{{i18n: cc.12}}\"/pause 1000/speak Pierre \"{{i18n: cc.13}}\"/faceDirection Pierre 3/textAboveHead Pierre \"{{i18n: cc.14}}\"/pause 1500/globalFade/viewport -1000 -1000/stopAdvancedMoves/warp Demetrius 37 15/faceDirection Clint 3/faceDirection Demetrius 3 true/warp Evelyn 29 17/warp Olivia 29 12/faceDirection Olivia 2 true/warp Andy 36 14/faceDirection Andy 3 true/warp Susan 36 13/warp Pam 28 14/faceDirection Pam 1 true/warp Gus 28 15/faceDirection Gus 1 true/warp Robin 36 16/faceDirection Robin 3/warp Emily 30 12/faceDirection Emily 2 true/warp Willy 34 17/faceDirection Willy 0 true/warp Jodi 35 12/faceDirection Jodi 2 true/warp Caroline 34 12/faceDirection Caroline 2 true/warp Clint 38 13/faceDirection Clint 3 true/warp Gunther 30 17/warp George 28 16/faceDirection George 1 true/viewport 32 10 true/faceDirection Pierre 2/faceDirection Pierre 3/faceDirection Pierre 0/faceDirection Pierre 3/pause 1000/speak Pierre \"{{i18n: cc.15}}\"/pause 1000/playMusic musicboxsong/move Pierre 0 1 3/speak Pierre \"{{i18n: cc.16}}\"/pause 500/faceDirection George 2/pause 500/showFrame George 16/textAboveHead George \"{{i18n: cc.17}}\"/move Pierre 0 -2 0/speak Pierre \"{{i18n: cc.18}}\"/pause 1000/speak Emily \"{{i18n: cc.19}}\"/move Pierre 0 1 1/textAboveHead Pierre \"{{i18n: cc.20}}\"/pause 400/faceDirection Willy 3 true/pause 400/textAboveHead Willy \"{{i18n: cc.21}}\"/pause 1000/speak Pierre \"{{i18n: cc.22}}\"/pause 500/speak Willy \"{{i18n: cc.23}}\"/faceDirection Pierre 3/speak Pierre \"{{i18n: cc.24}}\"/speak Gus \"{{i18n: cc.25}}\"/pause 100/textAboveHead Robin \"{{i18n: cc.26}}\"/faceDirection Pierre 0/playMusic none/speak Pierre \"{{i18n: cc.27}}\"/jump Morris/showFrame Morris 19/pause 1000/textAboveHead Pierre \"{{i18n: cc.28}}\"/pause 3000/showFrame George 0/playMusic springtown/pause 4000/move George 1 0 1/speak George \"{{i18n: cc.29}}\"/pause 500/shake Morris 5000/textAboveHead Demetrius \"{{i18n: cc.30}}\"/pause 250/textAboveHead Jodi \"{{i18n: cc.31}}\"/shake Morris 5000/faceDirection Morris 0 true/jump Morris/pause 500/textAboveHead Gus \"{{i18n: cc.32}}\"/pause 500/textAboveHead Gunther \"{{i18n: cc.33}}\"/textAboveHead Robin \"{{i18n: cc.34}}\"/pause 2000/speak Morris \"{{i18n: cc.35}}\"/pause 2000/faceDirection Pierre 2/speed Morris 4/shake Morris 5000/move Morris 0 12 2/playSound doorClose/faceDirection Robin 2 true/faceDirection Demetrius 2 true/pause 5000/move Morris 0 -8 0/playMusic none/message \"{{i18n: cc.36}}\"/pause 500/textAboveHead Lewis \"{{i18n: cc.37}}\"/playSound doorClose/move Morris 0 -4 3/move Pierre 0 0 1/speak Morris \"{{i18n: cc.38}}\"/shake Pierre 2000/speak Pierre \"{{i18n: cc.39}}\"/speak Morris \"{{i18n: cc.40}}\"/shake Pierre 2000/shake Lewis 2000/speak Pierre \"{{i18n: cc.41}}\"/jump Morris/pause 600/speak Morris \"{{i18n: cc.42}}\"/jump Emily/jump Demetrius/jump Lewis/textAboveHead Emily \"{{i18n: cc.43}}\"/textAboveHead George \"{{i18n: cc.44}}\"/textAboveHead Clint \"{{i18n: cc.45}}\"/pause 700/speak Lewis \"{{i18n: cc.46}}\"/textAboveHead Morris \"{{i18n: cc.47}}\"/pause 500/speak Morris \"{{i18n: cc.48}}\"/jump Pierre/textAboveHead Pierre \"{{i18n: cc.49}}\"/pause 500/speak Pierre \"{{i18n: cc.50}}\"/shake Morris 2000/speak Morris \"{{i18n: cc.51}}\"/pause 2000/textAboveHead Gunther \"{{i18n: cc.52}}\"/textAboveHead Willy \"{{i18n: cc.53}}\"/textAboveHead Jodi \"{{i18n: cc.54}}\"/pause 500/speak Pierre \"{{i18n: cc.55}}\"/speak Morris \"{{i18n: cc.56}}\"/pause 1000/speak Pierre \"{{i18n: cc.57}}\"/jump Morris/speak Morris \"{{i18n: cc.58}}\"/pause 1500/playMusic springtown/move Lewis 0 1 2/speak Lewis \"{{i18n: cc.59}}\"/speak Morris \"{{i18n: cc.60}}\"/emote Lewis 32/emote Morris 32/pause 2000/globalFade/viewport -9999 -9999/pause 4000/message \"{{i18n: cc.61}}\"/pause 2000/end position 52 20"
+                }
+        },
+        {
+            "Action": "EditData",
+            "Target": "Data/Events/CommunityCenter",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "true"},
+            "Entries": {
+                "Punch": "pause 100/skippable/showFrame Morris 12/textAboveHead Morris \"{{i18n: cc.62}}\"/pause 500/speak Morris \"{{i18n: cc.63}}\"/shake Pierre 500/pause 1000/speak Pierre \"{{i18n: cc.64}}\"/pause 500/speak Morris \"{{i18n: cc.65}}\"/playMusic event1/pause 2000/animate Pierre false true 200 20 21/positionOffset Pierre 8 8/pause 1500/speak Morris \"{{i18n: cc.66}}\"/move Morris 0 1 2/speak Pierre \"{{i18n: cc.67}}\"/faceDirection Morris 1 true/pause 50/faceDirection Morris 0/shake Morris 1000/pause 1500/speak Morris \"{{i18n: cc.68}}\"/speed Morris 4/move Morris 0 -1 3/showFrame Morris 20/positionOffset Morris -4 -4/animate Morris false true 200 20 21/pause 2000/stopAnimation Morris/showFrame Morris 22/playSound clubhit/stopAnimation Pierre/showFrame Pierre 22/pause 500/jump Caroline/textAboveHead Caroline \"{{i18n: cc.69}}\"/speed Caroline 4/move Caroline 0 4 1 true/animate Morris false true 200 20 21/animate Pierre false true 200 20 21/pause 500/faceDirection Andy 3/pause 500/speed Susan 4/move Susan 0 -1 3/speed Susan 4/move Susan -1 0 3 true/pause 200/jump Robin/showFrame Robin 19/pause 400/textAboveHead Andy \"{{i18n: cc.70}}\"/pause 1000/jump Lewis/stopAnimation Morris/showFrame Morris 22/playSound clubhit/shake Pierre 200/stopAnimation Pierre/showFrame Pierre 22/pause 500/animate Morris false true 200 20 21/animate Pierre false true 200 20 21/pause 2000/stopAnimation Morris/showFrame Morris 22/playSound clubhit/shake Pierre 200/stopAnimation Pierre/showFrame Pierre 22/pause 500/jump Caroline/speak Morris \"{{i18n: cc.71}}\"/animate Morris false true 200 20 21/animate Pierre false true 200 20 21/pause 2000/speak Pierre \"{{i18n: cc.72}}\"/pause 1000/stopAnimation Morris/showFrame Morris 22/playSound clubhit/shake Pierre 200/stopAnimation Pierre/showFrame Pierre 22/pause 500/animate Morris false true 200 20 21/animate Pierre false true 200 20 21/pause 1000/pause 500/textAboveHead Susan \"{{i18n: cc.76}}\"/pause 2000/stopAnimation Pierre/stopAnimation Morris/showFrame Pierre 17/showFrame Morris 20/pause 100/showFrame Pierre 18/showFrame Morris 23/playSound clubhit/shake Morris 250/pause 50/showFrame Pierre 17/showFrame Morris 20/pause 1000/showFrame Morris 20/pause 100/showFrame Pierre 18/showFrame Morris 23/playSound clubhit/shake Morris 250/pause 50/showFrame Morris 20/showFrame Pierre 17/pause 1000/showFrame Morris 20/pause 100/showFrame Pierre 18/showFrame Morris 23/playSound clubhit/shake Morris 250/pause 50/showFrame Morris 20/showFrame Pierre 17/pause 1000/shake Pierre 1000/showFrame Morris 19/pause 1000/showFrame Pierre 17/positionOffset Pierre 4 0/pause 100/positionOffset Pierre 4 0/showFrame Pierre 18/pause 100/positionOffset Pierre 4 0/showFrame Pierre 19/playSound clubSmash/warp Morris 34 23/specificTemporarySprite morrisFlying/pause 2000/playSound barrelBreak/showFrame Pierre 4/pause 2000/move Pierre 1 0 0/pause 1000/playSound dwop/faceDirection Pierre 1 true/pause 50/faceDirection Pierre 2/pause 100/showFrame Pierre 23/playSound stoneStep/pause 5000/showFrame Pierre 4/playMusic none/message \"{{i18n: cc.36}}\"/pause 500/textAboveHead Lewis \"{{i18n: cc.37}}\"/playSound doorClose/move Morris 0 -8 3/move Pierre 0 0 1/speak Morris \"{{i18n: cc.38}}\"/shake Pierre 2000/speak Pierre \"{{i18n: cc.39}}\"/speak Morris \"{{i18n: cc.40}}\"/shake Pierre 2000/shake Lewis 2000/speak Pierre \"{{i18n: cc.41}}\"/jump Morris/pause 600/speak Morris \"{{i18n: cc.74}}\"/jump Emily/jump Demetrius/jump Lewis/textAboveHead Emily \"{{i18n: cc.43}}\"/textAboveHead George \"{{i18n: cc.44}}\"/textAboveHead Clint \"{{i18n: cc.45}}\"/pause 700/speak Lewis \"{{i18n: cc.46}}\"/textAboveHead Morris \"{{i18n: cc.47}}\"/pause 500/speak Morris \"{{i18n: cc.48}}\"/jump Pierre/textAboveHead Pierre \"{{i18n: cc.49}}\"/pause 500/speak Pierre \"{{i18n: cc.50}}\"/showFrame Pierre 20/shake Morris 2000/pause 1000/speak Morris \"{{i18n: cc.75}}\"/showFrame Pierre 4/pause 2000/textAboveHead Gunther \"{{i18n: cc.52}}\"/textAboveHead Willy \"{{i18n: cc.53}}\"/textAboveHead Jodi \"{{i18n: cc.54}}\"/pause 500/speak Pierre \"{{i18n: cc.55}}\"/speak Morris \"{{i18n: cc.56}}\"/pause 1000/speak Pierre \"{{i18n: cc.57}}\"/jump Morris/speak Morris \"{{i18n: cc.58}}\"/pause 1500/playMusic springtown/move Lewis 0 1 2/speak Lewis \"{{i18n: cc.59}}\"/speak Morris \"{{i18n: cc.60}}\"/emote Lewis 32/emote Morris 32/pause 2000/globalFade/viewport -9999 -9999/pause 4000/message \"{{i18n: cc.61}}\"/pause 2000/end position 52 20"	
+                }
+        },
+
+        //Overrides SVE's Morris Townhouse event - adjusts dialogue to account for fact Morris already lives here
+        {
+            "Action": "EditData",
+            "Target": "data/events/JojaMart",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "true"},
+            "Entries": {
+            "6663407/e 6663406": "Hospital_Ambient/-500 -500/farmer 18 20 1 Martin 9 25 1 Andy 11 25 3 Sam 26 17 2 Pam 14 16 1 MorrisTod 24 26 3/animate Sam false true 100 40 40 41 41 42 42 41 41/skippable/pause 1250/viewport 23 26 true/move farmer 3 0 2/move farmer 0 3 2/pause 600/playSound stoneStep/pause 400/playSound stoneStep/pause 400/playSound stoneStep/pause 400/speak MorrisTod \"{{i18n: th.1}}\"/pause 750/doAction 21 24/pause 1000/move farmer 0 3 1/move farmer 1 0 1/pause 650/speak MorrisTod \"{{i18n: th.2}}\"/pause 800/playMusic musicboxsong/pause 200/speak MorrisTod \"{{i18n: th.3}}\"/pause 400/emote farmer 16/pause 300/speak MorrisTod \"{{i18n: th.4}}\"/pause 400/emote farmer 32/pause 200/speak MorrisTod \"{{i18n: th.5}}\"/pause 500/jump farmer/pause 850/speak MorrisTod \"{{i18n: th.6}}\"/pause 500/globalFade/viewport -1000 -1000/pause 500/end dialogue MorrisTod \"{{i18n: th.7}}\""
+            }
+        },
+
+
+
+
+
+
+        //Dialogue
+
+        //Loads regular dialogue for Morris when SVE isn't installed and CC not completed
+        {
+            "Action": "Load",
+            "Target": "Characters/Dialogue/MorrisTod",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false", "HasSeenEvent |contains=191393": "false"},
+            "FromFile": "assets/Dialogue/blank.json"
+        },
+        {
+            "Action": "EditData",
+            "Target": "Characters/Dialogue/MorrisTod",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false", "HasSeenEvent |contains=191393": "false"},
+            "Entries": {
+                "Introduction": "{{i18n: NS.Intro}}",
+                "Mon": "{{i18n: NS.Mon}}",
+                "Mon2": "{{i18n: NS.Mon2}}",
+                "Mon4": "{{i18n: NS.Mon4}}",
+                "Mon6": "{{i18n: NS.Mon6}}",
+                "Tue": "{{i18n: NS.Tue}}",
+                "Tue2": "{{i18n: NS.Tue2}}",
+                "Tue4": "{{i18n: NS.Tue4}}",
+                "Tue6": "{{i18n: NS.Tue6}}",
+                "Wed": "{{i18n: NS.Wed}}",
+                "Wed2": "{{i18n: NS.Wed2}}",
+                "Wed4": "{{i18n: NS.Wed4}}",
+                "Wed6": "{{i18n: NS.Wed6}}",
+                "Thu": "{{i18n: NS.Thu}}",
+                "Thu2": "{{i18n: NS.Thu2}}",
+                "Thu4": "{{i18n: NS.Thu4}}",
+                "Thu6": "{{i18n: NS.Thu6}}",
+                "Fri": "{{i18n: NS.Fri}}",
+                "Fri2": "{{i18n: NS.Fri2}}",
+                "Fri6": "{{i18n: NS.Fri6}}",
+                "Sat": "{{i18n: NS.Sat}}",
+                "Sat2": "{{i18n: NS.Sat2}}",
+                "Sat4": "{{i18n: NS.Sat4}}",
+                "Sun": "{{i18n: NS.Sun}}",
+                "Sun2": "{{i18n: NS.Sun2}}",
+                "Sun6": "{{i18n: NS.Sun6}}"
+            }
+        },
+
+        //Loads festival/other dialogue for Morris -- overwrites SVE dialogue because Morris will appear at festivals without becoming mayor
+        {
+            "Action": "EditData",
+            "Target": "Characters/Dialogue/MorrisTod, Characters/Dialogue/MarriageDialogueMorrisTod",
+            "Entries": {
+                
+                    "danceRejection": "{{i18n: danceRejection}}",
+                    "spring_1_2": "{{i18n: spring_1_2}}",
+                    "spring_12": "{{i18n: spring_12}}",
+                    "spring_23": "{{i18n: spring_23}}",
+                    "spring_28": "{{i18n: spring_28}}",
+                    "summer_1": "{{i18n: summer_1}}",
+                    "summer_10": "{{i18n: summer_10}}",
+                    "summer_27": "{{i18n: summer_27}}",
+                    "fall_1": "{{i18n: fall_1}}",
+                    "fall_15": "{{i18n: fall_15}}",
+                    "fall_26": "{{i18n: fall_26}}",
+                    "fall_28": "{{i18n: fall_28}}",
+                    "winter_1": "{{i18n: winter_1}}",
+                    "winter_7": "{{i18n: winter_7}}",
+                    "winter_24": "{{i18n: winter_24}}",
+                    "winter_Mon": "{{i18n: winter_Mon}}",
+                    "winter_Mon6": "{{i18n: winter_Mon6}}"
+                    
+            }
+        },
+        {
+            //Dialogue for dating Morris when CC not completed, SVE not installed
+            "Action": "EditData",
+            "Target": "Characters/Dialogue/MorrisTod",
+            "When": {"Relationship:MorrisTod": "Dating", "HasSeenEvent |contains=191393": false, "HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false"},
+            "Entries": {
+                "divorced": "{{i18n: NoCCSVE.divorced}}",
+                "Mon8": "{{i18n: NoCCSVE.Mon8}}",
+                "Mon10": "{{i18n: NoCCSVE.Mon10}}",
+                "Tue8": "{{i18n: NoCCSVE.Tue8}}",
+                "Tue10": "{{i18n: NoCCSVE.Tue10}}",
+                "Wed8": "{{i18n: NoCCSVE.Wed8}}",
+                "Wed10": "{{i18n: NoCCSVE.Wed10}}",
+                "Thu8": "{{i18n: NoCCSVE.Thu8}}",
+                "Thu10": "{{i18n: NoCCSVE.Thu10}}",
+                "Fri8": "{{i18n: NoCCSVE.Fri8}}",
+                "Fri10": "{{i18n: NoCCSVE.Fri10}}",
+                "Sat8": "{{i18n: NoCCSVE.Sat8}}",
+                "Sat10": "{{i18n: NoCCSVE.Sat10}}",
+                "Sun8": "{{i18n: NoCCSVE.Sun8}}",
+                "Sun10": "{{i18n: NoCCSVE.Sun10}}",
+                "summer_Mon8": "{{i18n: NoCCSVE.summer_Mon8}}",
+                "summer_Mon10": "{{i18n: NoCCSVE.Mon10}}",
+                "summer_Tue8": "{{i18n: NoCCSVE.summer_Tue8}}",
+                "summer_Tue10": "{{i18n: NoCCSVE.Tue10}}",
+                "summer_Wed8": "{{i18n: NoCCSVE.Wed8}}",
+                "summer_Wed10": "{{i18n: NoCCSVE.Wed10}}",
+                "summer_Thu8": "{{i18n: NoCCSVE.summer_Thu8}}",
+                "summer_Thu10": "{{i18n: NoCCSVE.Thu10}}",
+                "summer_Fri8": "{{i18n: NoCCSVE.summer_Fri8}}",
+                "summer_Fri10": "{{i18n: NoCCSVE.Fri10}}",
+                "summer_Sat8": "{{i18n: NoCCSVE.Sat8}}",
+                "summer_Sat10": "{{i18n: NoCCSVE.Sat10}}",
+                "summer_Sun8": "{{i18n: NoCCSVE.Sun8}}",
+                "summer_Sun10": "{{i18n: NoCCSVE.Sun10}}",
+                "fall_Mon8": "{{i18n: NoCCSVE.Mon8}}",
+                "fall_Mon10": "{{i18n: NoCCSVE.Mon10}}",
+                "fall_Tue8": "{{i18n: NoCCSVE.Tue8}}",
+                "fall_Tue10": "{{i18n: NoCCSVE.Tue10}}",
+                "fall_Wed8": "{{i18n: NoCCSVE.Wed8}}",
+                "fall_Wed10": "{{i18n: NoCCSVE.Wed10}}",
+                "fall_Thu8": "{{i18n: NoCCSVE.Thu8}}",
+                "fall_Thu10": "{{i18n: NoCCSVE.Thu10}}",
+                "fall_Fri8": "{{i18n: NoCCSVE.Fri8}}",
+                "fall_Fri10": "{{i18n: NoCCSVE.Fri10}}",
+                "fall_Sat8": "{{i18n: NoCCSVE.Sat8}}",
+                "fall_Sat10": "{{i18n: NoCCSVE.Sat10}}",
+                "fall_Sun8": "{{i18n: NoCCSVE.Sun8}}",
+                "fall_Sun10": "{{i18n: NoCCSVE.Sun10}}",
+                "winter_Mon8": "{{i18n: NoCCSVE.summer_Mon8}}",
+                "winter_Mon10": "{{i18n: NoCCSVE.Mon10}}",
+                "winter_Tue8": "{{i18n: NoCCSVE.summer_Tue8}}",
+                "winter_Tue10": "{{i18n: NoCCSVE.winter_Tue10}}",
+                "winter_Wed8": "{{i18n: NoCCSVE.Wed8}}",
+                "winter_Wed10": "{{i18n: NoCCSVE.Wed10}}",
+                "winter_Thu8": "{{i18n: NoCCSVE.summer_Thu8}}",
+                "winter_Thu10": "{{i18n: NoCCSVE.Thu10}}",
+                "winter_Fri8": "{{i18n: NoCCSVE.summer_Fri8}}",
+                "winter_Fri10": "{{i18n: NoCCSVE.Fri10}}",
+                "winter_Sat8": "{{i18n: NoCCSVE.Sat8}}",
+                "winter_Sat10": "{{i18n: NoCCSVE.Sat10}}",
+                "winter_Sun8": "{{i18n: NoCCSVE.Sun8}}",
+                "winter_Sun10": "{{i18n: NoCCSVE.Sun10}}",
+                "winter_28": "{{i18n: NoCCSVE.winter_28}}",
+                "spring_1_2": "{{i18n: NoCCSVE.spring_1_2}}",
+                "spring_12": "{{i18n: NoCCSVE.spring_12}}",
+                "spring_23": "{{i18n: NoCCSVE.spring_23}}",
+                "fall_1": "{{i18n: NoCCSVE.fall_1}}",
+                "winter_24": "{{i18n: NoCCSVE.winter_24}}"
+            }
+        },
+        {
+            //Dialogue for dating Morris when CC not completed, SVE installed -- removes some lines so SVE's dialogue is also used
+            "Action": "EditData",
+            "Target": "Characters/Dialogue/MorrisTod",
+            "When": {"Relationship:MorrisTod": "Dating", "HasSeenEvent |contains=191393": false, "HasMod |contains=FlashShifter.StardewValleyExpandedCP": "true"},
+            "Entries": {
+                "divorced": "{{i18n: NoCCSVE.divorced}}",
+                "Mon8": "{{i18n: NoCCSVE.Mon8}}",
+                "Wed8": "{{i18n: NoCCSVE.Wed8}}",
+                "Thu10": "{{i18n: NoCCSVE.Thu10}}",
+                "Fri8": "{{i18n: NoCC.Fri8}}",
+                "Sat8": "{{i18n: NoCCSVE.Sat8}}",
+                "Sat10": "{{i18n: NoCCSVE.Sat10}}",
+                "Sun10": "{{i18n: NoCCSVE.Sun10}}",
+                "summer_Mon8": "{{i18n: NoCCSVE.summer_Mon8}}",
+                "summer_Tue8": "{{i18n: NoCC.summer_Tue8}}",
+                "summer_Wed8": "{{i18n: NoCCSVE.Wed8}}",
+                "summer_Wed10": "{{i18n: NoCCSVE.Wed10}}",
+                "summer_Fri8": "{{i18n: NoCCSVE.summer_Fri8}}",
+                "summer_Sat8": "{{i18n: NoCCSVE.Sat8}}",
+                "summer_Sat10": "{{i18n: NoCCSVE.Sat10}}",
+                "fall_Mon8": "{{i18n: NoCCSVE.Mon8}}",
+                "fall_Tue8": "{{i18n: NoCCSVE.Tue8}}",
+                "fall_Wed8": "{{i18n: NoCCSVE.Wed10}}",
+                "fall_Thu8": "{{i18n: NoCCSVE.Thu10}}",
+                "fall_Fri8": "{{i18n: NoCC.Fri8}}",
+                "fall_Sat8": "{{i18n: NoCCSVE.Sat8}}",
+                "fall_Sun10": "{{i18n: NoCCSVE.Sat10}}!",
+                "winter_Mon8": "{{i18n: NoCCSVE.summer_Mon8}}",
+                "winter_Tue8": "{{i18n: NoCC.summer_Tue8}}",
+                "winter_Wed8": "{{i18n: NoCCSVE.Wed8}}",
+                "winter_Wed10": "{{i18n: NoCCSVE.Wed10}}",
+                "winter_Thu8": "{{i18n: NoCCSVE.summer_Thu8}}",
+                "winter_Mon10": "{{i18n: NoCCSVE.Thu10}}",
+                "winter_Fri8": "{{i18n: NoCC.Fri8}}",
+                "winter_Sat8": "{{i18n: NoCCSVE.Sat8}}",
+                "spring_1_2": "{{i18n: NoCCSVE.spring_1_2}}",
+                "spring_12": "{{i18n: NoCCSVE.spring_12}}",
+                "spring_23": "{{i18n: NoCCSVE.spring_23}}",
+                "fall_1": "{{i18n: NoCCSVE.fall_1}}",
+                "winter_24": "{{i18n: NoCCSVE.winter_24}}",
+                "winter_28": "{{i18n: NoCCSVE.winter_28}}"
+            }
+        },
+
+        //Morris rainy dialogue
+        { 
+            "Action": "EditData",
+            "Target": "Characters/Dialogue/rainy",
+            "Entries": {
+            "MorrisTod": "{{i18n: rainy}}"
+            }
+       },
+
+        //Loads regular dialogue for Morris when CC completed and no SVE
+        {
+            "Action": "Load",
+            "Target": "Characters/Dialogue/MorrisTod",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false", "HasSeenEvent |contains=191393": "true"},
+            "FromFile": "assets/Dialogue/blank.json"
+        },
+        {
+            "Action": "EditData",
+            "Target": "Characters/Dialogue/MorrisTod",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false", "HasSeenEvent |contains=191393": "true"},
+            "Entries": {
+                "Introduction": "{{i18n: CC.Intro}}",
+                "Mon": "{{i18n: CC.Mon}}",
+                "Mon2": "{{i18n: NS.Mon2}}",
+                "Mon4": "{{i18n: CC.Mon4}}",
+                "Mon6": "{{i18n: CC.Mon6}}",
+                "Tue": "{{i18n: CC.Tue}}",
+                "Tue2": "{{i18n: CC.Tue2}}",
+                "Tue4": "{{i18n: CC.Tue4}}",
+                "Tue6": "{{i18n: CC.Tue6}}",
+                "Wed": "{{i18n: CC.Wed}}",
+                "Wed2": "{{i18n: CC.Wed2}}",
+                "Wed4": "{{i18n: CC.Wed4}}",
+                "Wed6": "{{i18n: CC.Wed6}}",
+                "Thu": "{{i18n: CC.Thu}}",
+                "Thu2": "{{i18n: CC.Thu2}}",
+                "Thu4": "{{i18n: CC.Thu4}}",
+                "Thu6": "{{i18n: NS.Thu6}}",
+                "Fri": "{{i18n: CC.Fri}}",
+                "Fri2": "{{i18n: CC.Fri2}}",
+                "Fri4": "{{i18n: CC.Fri4}}",
+                "Fri6": "{{i18n: CC.Fri6}}",
+                "Sat": "{{i18n: CC.Sat}}",
+                "Sat2": "{{i18n: CC.Sat2}}",
+                "Sat4": "{{i18n: CC.Sat4}}",
+                "Sun": "{{i18n: CC.Sun}}",
+                "Sun2": "{{i18n: CC.Sun2}}",
+                "Sun6": "{{i18n: CC.Sun6}}",
+                "SeedShop_4_17": "{{i18n: CC.SeedshopTill}}",
+                "SeedShop_6_19": "{{i18n: CC.SeedshopPierre}}",
+                "SeedShop_12_28": "{{i18n: CC.SeedshopAisle}}",
+                "Saloon_20_17": "{{i18n: CC.Saloon}}",
+                "winter_28": "{{i18n: CC.winter_28}}",
+                "spring_1_2": "{{i18n: CC.spring_1_2}}",
+                "spring_12": "{{i18n: NoCCSVE.spring_12}}",
+                "spring_23": "{{i18n: CC.spring_23}}",
+                "summer_10": "{{i18n: CC.summer_10}}",
+                "spring_28": "{{i18n: CC.spring_28}}",
+                "fall_15": "{{i18n: CC.fall_15}}",
+                "fall_28": "{{i18n: CC.fall_28}}",
+                "summer_Mon": "{{i18n: CC.summer_Mon}}",
+                "summer_Mon6": "{{i18n: CC.summer_Mon6}}",
+                "summer_Tue6": "{{i18n: CC.summer_Tue6}}",
+                "summer_Wed": "{{i18n: CC.summer_Wed}}",
+                "summer_Thu": "{{i18n: CC.summer_Thu}}",
+                "summer_Thu8": "{{i18n: CC.summer_Thu8}}",
+                "summer_Fri": "{{i18n: CC.summer_Fri}}",
+                "summer_Sat": "{{i18n: CC.summer_Sat}}",
+                "summer_Sun": "{{i18n: CC.summer_Sun}}",
+                "summer_Sun6": "{{i18n: CC.summer_Sun6}}",
+                "fall_Mon4": "{{i18n: CC.fall_Mon4}}",
+                "fall_Mon8": "{{i18n: CC.fall_Mon8}}",
+                "fall_Tue": "{{i18n: CC.Tue}}",
+                "fall_Wed8": "{{i18n: CC.fall_Wed8}}",
+                "fall_Thu": "{{i18n: CC.Thu}}",
+                "fall_Thu8": "{{i18n: CC.fall_Thu8}}",
+                "fall_Fri": "{{i18n: CC.Fri}}",
+                "fall_Fri6": "{{i18n: CC.Fri6}}",
+                "fall_Sat6": "{{i18n: CC.Sat4}}",
+                "fall_Sun": "{{i18n: CC.Sun}}",
+                "fall_Sun8": "{{i18n: CC.Sun6}}",
+                "winter_Wed": "{{i18n: CC.winter_Wed}}",
+                "winter_Thu": "{{i18n: CC.winter_Thu}}",
+                "winter_Thu6": "{{i18n: CC.winter_Thu6}}",
+                "winter_Sat": "{{i18n: CC.winter_Sat}}",
+                "winter_Sun": "{{i18n: CC.winter_Sun}}"
+            }
+        },
+
+        //Edits regular dialogue for Morris when CC completed and SVE installed (to overwrite all Joja lines)
+
+        {
+            "Action": "EditData",
+            "Target": "Characters/Dialogue/MorrisTod",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "true", "HasSeenEvent |contains=191393": "true"},
+            "Entries": {
+                "Introduction": "{{i18n: CC.Intro}}",
+                "Mon": "{{i18n: CC.Mon}}",
+                "Mon2": "{{i18n: NS.Mon2}}",
+                "Mon4": "{{i18n: CC.Mon4}}",
+                "Mon6": "{{i18n: CC.Mon6}}",
+                "Tue": "{{i18n: CC.Tue}}",
+                "Tue2": "{{i18n: CC.Tue2}}",
+                "Tue4": "{{i18n: CC.Tue4}}",
+                "Tue8": "{{i18n: CC.Tue6}}",
+                "Wed": "{{i18n: CC.Wed}}",
+                "Wed2": "{{i18n: CC.Wed2}}",
+                "Wed4": "{{i18n: CC.Wed4}}",
+                "Wed8": "{{i18n: CC.Wed6}}",
+                "Thu": "{{i18n: CC.Thu}}",
+                "Thu2": "{{i18n: CC.Thu2}}",
+                "Thu4": "{{i18n: CC.Thu4}}",
+                "Thu6": "{{i18n: NS.Thu6}}",
+                "Fri": "{{i18n: CC.Fri}}",
+                "Fri2": "{{i18n: CC.Fri2}}",
+                "Fri4": "{{i18n: CC.Fri4}}",
+                "Fri6": "{{i18n: CC.Fri6}}",
+                "Sat": "{{i18n: CC.Sat}}",
+                "Sat2": "{{i18n: CC.Sat2}}",
+                "Sat4": "{{i18n: CC.Sat4}}",
+                "Sun": "{{i18n: CC.Sun}}",
+                "Sun2": "{{i18n: CC.Sun2}}",
+                "Sun6": "{{i18n: CC.Sun6}}",
+                "SeedShop_6_19": "{{i18n: CC.SeedshopPierre}}",
+                "SeedShop_12_28": "{{i18n: CC.SeedshopAisle}}",
+                "Saloon_20_17": "{{i18n: CC.Saloon}}",
+                "SeedShop_4_17": "{{i18n: CC.SeedshopTill}}",
+                "winter_28": "{{i18n: CC.winter_28}}",
+                "spring_1_2": "{{i18n: CC.spring_1_2}}",
+                "spring_12": "{{i18n: NoCCSVE.spring_12}}",
+                "spring_23": "{{i18n: CC.spring_23}}",
+                "summer_10": "{{i18n: CC.summer_10}}",
+                "spring_28": "{{i18n: CC.spring_28}}",
+                "fall_15": "{{i18n: CC.fall_15}}",
+                "fall_28": "{{i18n: CC.fall_28}}",
+                "summer_Mon": "{{i18n: CC.summer_Mon}}",
+                "summer_Mon6": "{{i18n: CC.summer_Mon6}}",
+                "summer_Tue6": "{{i18n: CC.summer_Tue6}}",
+                "summer_Wed": "{{i18n: CC.summer_Wed}}",
+                "summer_Thu": "{{i18n: CC.summer_Thu}}",
+                "summer_Thu8": "{{i18n: CC.summer_Thu8}}",
+                "summer_Fri":  "{{i18n: CC.summer_Fri}}",
+                "summer_Sat":  "{{i18n: CC.summer_Sat}}",
+                "summer_Sun":  "{{i18n: CC.summer_Sun}}",
+                "summer_Sun6":  "{{i18n: CC.summer_Sun6}}",
+                "fall_Mon4": "{{i18n: CC.fall_Mon4}}",
+                "fall_Mon8": "{{i18n: CC.fall_Mon8}}",
+                "fall_Tue": "{{i18n: CC.Tue}}",
+                "fall_Wed8": "{{i18n: CC.fall_Wed8}}",
+                "fall_Thu": "{{i18n: CC.Thu}}",
+                "fall_Thu8": "{{i18n: CC.fall_Thu8}}",
+                "fall_Fri": "{{i18n: CC.Fri}}",
+                "fall_Fri6": "{{i18n: CC.Fri6}}",
+                "fall_Sat6": "{{i18n: CC.Sat4}}",
+                "fall_Sun": "{{i18n: CC.Sun}}",
+                "fall_Sun8": "{{i18n: CC.Sun6}}",
+                "winter_Wed": "{{i18n: CC.winter_Wed}}",
+                "winter_Thu": "{{i18n: CC.winter_Thu}}",
+                "winter_Thu6": "{{i18n: CC.winter_Thu6}}",
+                "winter_Sat": "{{i18n: CC.winter_Sat}}",
+                "winter_Sun": "{{i18n: CC.winter_Sun}}"
+            }
+        },
+
+        //Loads dating dialogue for Morris when CC completed
+
+        {
+            "Action": "EditData",
+            "Target": "Characters/Dialogue/MorrisTod",
+            "When": {"Relationship:MorrisTod": "Dating", "HasSeenEvent |contains=191393": true},
+            "Entries": {
+                "divorced": "{{i18n: CCDating.divorced}}",
+                "Mon8": "{{i18n: CCDating.Mon8}}",
+                "Mon10": "{{i18n: CCDating.Mon10}}",
+                "Tue8": "{{i18n: CCDating.Tue8}}",
+                "Tue10": "{{i18n: CCDating.Tue10}}",
+                "Wed8": "{{i18n: CCDating.Wed8}}",
+                "Wed10": "{{i18n: CCDating.Wed10}}",
+                "Thu8": "{{i18n: CCDating.Thu8}}",
+                "Thu10": "{{i18n: CCDating.Thu10}}",
+                "Fri8": "{{i18n: NoCCSVE.Fri8}}",
+                "Fri10": "{{i18n: CCDating.Fri10}}",
+                "Sat8": "{{i18n: CCDating.Sat8}}",
+                "Sat10": "{{i18n: CCDating.Sat10}}",
+                "Sun8": "{{i18n: CCDating.Sun8}}",
+                "Sun10": "{{i18n: CCDating.Sun10}}",
+                "summer_Mon8": "{{i18n: CCDating.summer_Mon8}}",
+                "summer_Mon10": "{{i18n: CCDating.Mon10}}",
+                "summer_Tue8": "{{i18n: CCDating.summer_Tue8}}",
+                "summer_Tue10": "{{i18n: CCDating.Tue10}}",
+                "summer_Wed8": "{{i18n: CCDating.Wed8}}",
+                "summer_Wed10": "{{i18n: NoCCSVE.Wed10}}",
+                "summer_Thu8": "{{i18n: CCDating.summer_Thu8}}",
+                "summer_Thu10": "{{i18n: CCDating.Thu10}}",
+                "summer_Fri8": "{{i18n: NoCCSVE.summer_Fri8}}",
+                "summer_Fri10": "{{i18n: CCDating.Fri10}}",
+                "summer_Sat8": "{{i18n: CCDating.Sat8}}",
+                "summer_Sat10": "{{i18n: CCDating.Sat10}}",
+                "summer_Sun8": "{{i18n: CCDating.summer_Sun8}}",
+                "summer_Sun10": "{{i18n: CCDating.Sun10}}",
+                "fall_Mon8": "{{i18n: CCDating.Mon8}}",
+                "fall_Mon10": "{{i18n: CCDating.Mon10}}",
+                "fall_Tue8": "{{i18n: CCDating.Tue8}}",
+                "fall_Tue10": "{{i18n: CCDating.Tue10}}",
+                "fall_Wed8": "{{i18n: CCDating.Wed8}}",
+                "fall_Wed10": "{{i18n: CCDating.Wed10}}",
+                "fall_Thu8": "{{i18n: CCDating.Thu8}}",
+                "fall_Thu10": "{{i18n: CCDating.Thu10}}",
+                "fall_Fri8": "{{i18n: NoCCSVE.Fri8}}",
+                "fall_Fri10": "{{i18n: CCDating.Fri10}}",
+                "fall_Sat8": "{{i18n: CCDating.Sat8}}",
+                "fall_Sat10": "{{i18n: CCDating.Sat10}}",
+                "fall_Sun8": "{{i18n: CCDating.Sun8}}",
+                "fall_Sun10": "{{i18n: CCDating.Sun10}}",
+                "winter_Mon8": "{{i18n: CCDating.summer_Mon8}}",
+                "winter_Mon10": "{{i18n: CCDating.Mon10}}",
+                "winter_Tue8": "{{i18n: CCDating.summer_Tue8}}",
+                "winter_Tue10": "{{i18n: CCDating.Tue10}}",
+                "winter_Wed8": "{{i18n: CCDating.Wed8}}",
+                "winter_Wed10": "{{i18n: CCDating.Wed10}}",
+                "winter_Thu8": "{{i18n: CCDating.winter_Thu8}}",
+                "winter_Thu10": "{{i18n: CCDating.Thu10}}",
+                "winter_Fri8": "{{i18n: NoCCSVE.summer_Fri8}}",
+                "winter_Fri10": "{{i18n: CCDating.Fri10}}",
+                "winter_Sat8": "{{i18n: CCDating.Sat8}}",
+                "winter_Sat10": "{{i18n: CCDating.Sat10}}",
+                "winter_Sun8": "{{i18n: CCDating.summer_Sun8}}",
+                "winter_Sun10": "{{i18n: CCDating.Sun10}}",
+                "SeedShop_6_19": "{{i18n: CC.SeedshopPierre}}",
+                "SeedShop_12_28": "{{i18n: CC.SeedshopAisle}}",
+                "Saloon_20_17": "{{i18n: CC.Saloon}}",
+                "SeedShop_4_17": "{{i18n: CC.SeedshopTill}}",
+                
+                //Overriding some Joja-specific SVE lines
+                "winter_28": "{{i18n: NoCCSVE.winter_28}}",
+                "spring_1_2": "{{i18n: NoCCSVE.spring_1_2}}",
+                "spring_12": "{{i18n: NoCCSVE.spring_12}}",
+                "spring_23": "{{i18n: NoCCSVE.spring_23}}",
+                "summer_10": "{{i18n: CC.summer_10}}",
+                "fall_1": "{{i18n: NoCCSVE.fall_1}}",
+                "winter_24": "{{i18n: NoCCSVE.winter_24}}"
+            }
+        },
+
+        //Adds additional Pierre dialogue about Morris
+        {
+            "Action": "EditData",
+            "Target": "Characters/Dialogue/Pierre",
+            "When": {"HasSeenEvent |contains=191393": "true"},
+            "Entries": {
+                "cc_Complete": "{{i18n: Pierre.cc_Complete}}",
+                "Fri4": "{{i18n: Pierre.Fri4}}",
+                "Tue8": "{{i18n: Pierre.Tue8}}",
+                "Wed": "{{i18n: Pierre.Wed}}",
+                "Wed6": "{{i18n: Pierre.Wed6}}",
+                "Fri6": "{{i18n: Pierre.Fri6}}",
+                "Sun4": "{{i18n: Pierre.Sun4}}",
+                "Thu2": "{{i18n: Pierre.Thu2}}",
+                "winter_Mon": "{{i18n: Pierre.winter_Mon}}"
+            }
+        },
+
+        //Morris engagement dialogue
+        {
+            "Action": "EditData",
+            "Target": "Data/EngagementDialogue",
+            "Entries": {
+                "MorrisTod0": "{{i18n: Engagement.Morris1}}",
+                "MorrisTod1": "{{i18n: Engagement.Morris2}}"
+            }
+        },
+
+        //Loads Morris's marriage dialogue file
+        {
+            "Action": "Load",
+            "Target": "Characters/Dialogue/MarriageDialogueMorrisTod",
+            "FromFile": "assets/Dialogue/blank.json"
+        },
+        {
+            "Action": "EditData",
+            "Target": "Characters/Dialogue/MarriageDialogueMorrisTod",
+            "Entries": {
+
+                //Location specific dialogue
+                "patio_MorrisTod": "{{i18n: Marriage.Patio}}",
+                "spouseRoom_MorrisTod": "{{i18n: Marriage.Room}}",
+                "funLeave_MorrisTod": "{{i18n: Marriage.funLeave}}",
+                "funReturn_MorrisTod": "{{i18n: Marriage.funReturn}}",
+            
+                //Indoor dialogue during the day with rainy weather
+                "Rainy_Day_0": "{{i18n: Marriage.Rainy_Day_0}}",
+                "Rainy_Day_1": "{{i18n: Marriage.Rainy_Day_1}}",
+                "Rainy_Day_2": "{{i18n: Marriage.Rainy_Day_2}}",
+                "Rainy_Day_3": "{{i18n: Marriage.Rainy_Day_3}}",
+                "Rainy_Day_4": "{{i18n: Marriage.Rainy_Day_4}}",
+            
+                //Indoor dialogue during the day with good weather
+                "Indoor_Day_0": "{{i18n: Marriage.Indoor_Day_0}}",
+                "Indoor_Day_1": "{{i18n: Marriage.Indoor_Day_1}} [730 727]",
+                "Indoor_Day_2": "{{i18n: Marriage.Indoor_Day_2}}",
+                "Indoor_Day_3": "{{i18n: Marriage.Indoor_Day_3}}",
+                "Indoor_Day_4": "{{i18n: Marriage.Indoor_Day_4}}",
+            
+                //Indoor nighttime dialogue during rain
+                "Rainy_Night_0": "{{i18n: Marriage.Rainy_Night_0}}",
+                "Rainy_Night_1": "{{i18n: Marriage.Rainy_Night_1}}",
+                "Rainy_Night_2": "{{i18n: Marriage.Rainy_Night_2}}",
+                "Rainy_Night_3": "{{i18n: Marriage.Rainy_Night_3}}",
+                "Rainy_Night_4": "{{i18n: Marriage.Rainy_Night_4}}",
+            
+                //Indoor nighttime dialogue when it's not rainy
+                "Indoor_Night_0": "{{i18n: Marriage.Indoor_Night_0}}",
+                "Indoor_Night_1": "{{i18n: Marriage.Indoor_Night_1}}",
+                "Indoor_Night_2": "{{i18n: Marriage.Indoor_Night_2}}",
+                "Indoor_Night_3": "{{i18n: Marriage.Indoor_Night_3}}",
+                "Indoor_Night_4": "{{i18n: Marriage.Indoor_Night_4}}",
+            
+                //Outdoor dialogue (shows when on farm)
+                "Outdoor_MorrisTod": "{{i18n: Marriage.Outdoor_MorrisTod}}",
+                "Outdoor_0": "{{i18n: Marriage.Outdoor_0}}",
+                "Outdoor_1": "{{i18n: Marriage.Outdoor_1}}",
+                "Outdoor_2": "{{i18n: Marriage.Outdoor_2}}",
+                "Outdoor_3": "{{i18n: Marriage.Outdoor_3}}",
+                "Outdoor_4": "{{i18n: Marriage.Outdoor_4}}",
+            
+                //Child dialogue
+                "OneKid_0": "{{i18n: Marriage.OneKid_0}}",
+                "OneKid_1": "{{i18n: Marriage.OneKid_1}}",
+                "OneKid_2": "{{i18n: Marriage.OneKid_2}}",
+                "OneKid_3": "{{i18n: Marriage.OneKid_3}}",
+                "OneKid_4": "{{i18n: Marriage.OneKid_4}}",
+                "TwoKids_0": "{{i18n: Marriage.TwoKids_0}}",
+                "TwoKids_1": "{{i18n: Marriage.TwoKids_1}}",
+                "TwoKids_2": "{{i18n: Marriage.TwoKids_2}}",
+                "TwoKids_3": "{{i18n: Marriage.TwoKids_3}}",
+                "TwoKids_4": "{{i18n: Marriage.TwoKids_4}}",
+            
+                //Good dialogue
+                "Good_0": "{{i18n: Marriage.Good_0}}",
+                "Good_1": "{{i18n: Marriage.Good_1}}",
+                "Good_2": "{{i18n: Marriage.Good_2}}",
+                "Good_3": "{{i18n: Marriage.Good_3}}",
+                "Good_4": "{{i18n: Marriage.Good_4}}",
+                "Good_5": "{{i18n: Marriage.Good_5}}",
+                "Good_6": "{{i18n: Marriage.Good_6}}",
+                "Good_7": "{{i18n: Marriage.Good_7}}",
+                "Good_8": "{{i18n: Marriage.Good_8}}",
+                "Good_9": "{{i18n: Marriage.Good_9}}",
+            
+                //Neutral dialogue
+                "Neutral_0": "{{i18n: Marriage.Neutral_0}}",
+                "Neutral_1": "{{i18n: Marriage.Neutral_1}}",
+                "Neutral_2": "{{i18n: Marriage.Neutral_2}}",
+                "Neutral_3": "{{i18n: Marriage.Neutral_3}}",
+                "Neutral_4": "{{i18n: Marriage.Neutral_4}}",
+                "Neutral_5": "{{i18n: Marriage.Neutral_5}}",
+                "Neutral_6": "{{i18n: Marriage.Neutral_6}}",
+                "Neutral_7": "{{i18n: Marriage.Neutral_7}}",
+                "Neutral_8": "{{i18n: Marriage.Neutral_8}}",
+                "Neutral_9": "{{i18n: Marriage.Neutral_9}}",
+            
+                //Bad dialogue
+                "Bad_0": "{{i18n: Marriage.Bad_0}}",
+                "Bad_1": "{{i18n: Marriage.Bad_1}}",
+                "Bad_2": "{{i18n: Marriage.Bad_2}}",
+                "Bad_3": "{{i18n: Marriage.Bad_3}}",
+                "Bad_4": "{{i18n: Marriage.Bad_4}}",
+                "Bad_5": "{{i18n: Marriage.Bad_5}}",
+                "Bad_6": "{{i18n: Marriage.Bad_6}}",
+                "Bad_7": "{{i18n: Marriage.Bad_7}}",
+                "Bad_8": "{{i18n: Marriage.Bad_8}}",
+                "Bad_9": "{{i18n: Marriage.Bad_9}}",
+            
+                //Day-specific dialogue
+                "spring_MorrisTod": "{{i18n: Marriage.spring_MorrisTod}}",
+                "summer_MorrisTod": "{{i18n: Marriage.summer_MorrisTod}}",
+                "fall_MorrisTod": "{{i18n: Marriage.fall_MorrisTod}}",
+                "winter_MorrisTod": "{{i18n: Marriage.winter_MorrisTod}}",
+                "winter_28": "{{i18n: Marriage.winter_28}}",
+                "spring_1_2": "{{i18n: Marriage.spring_1_2}}",
+                "spring_12": "{{i18n: NoCCSVE.spring_12}}",
+                "spring_23": "{{i18n: NoCCSVE.spring_23}}",
+                "fall_1": "{{i18n: NoCCSVE.fall_1}}",
+                "winter_24": "{{i18n: NoCCSVE.winter_24}}",
+                "spring_28": "{{i18n: Marriage.spring_28}}",
+                "summer_1": "{{i18n: Marriage.summer_1}}",
+                "summer_10": "{{i18n: CC.summer_10}}",
+                "summer_27": "{{i18n: summer_27}}",
+                "fall_15": "{{i18n: CC.fall_15}}",
+                "fall_26": "{{i18n: fall_26}}",
+                "fall_28": "{{i18n: CC.fall_28}}",
+                "winter_1": "{{i18n: Marriage.winter_1}}",
+                "winter_7": "{{i18n: winter_7}}"
+              }
+        },
+
+        //Loads Morris's marriage dialogue when Joja route taken/CC route not taken
+        {
+            "Action": "Include",
+            "When": {"HasSeenEvent |contains=191393": "false"},
+            "FromFile": "assets/Dialogue/marriagedialoguejoja.json"
+        },
+
+        //Loads Morris's marriage dialogue when he's the mayor
+        {
+            "Action": "Include",
+            "When": {"HasSeenEvent |contains=191393": "false", "HasSeenEvent |contains=6665293": "true"},
+            "FromFile": "assets/Dialogue/marriagedialoguemayor.json"
+        },
+
+        //Randomly loads Morris's schedule dialogue
+        {
+            "Action": "Load",
+            "Target": "Strings/schedules/Morris",
+            "FromFile": "assets/Dialogue/blank.json"
+        },
+        {
+            "Action": "EditData",
+            "Target": "Strings/schedules/Morris",
+            "Entries": {
+                "Joja": "{{Random: {{i18n: SS1.Joja}}@@{{i18n: SS2.Joja}}@@{{i18n: SS3.Joja}}@@{{i18n: SS4.Joja}}@@{{i18n: SS5.Joja}} |inputSeparator=@@}}",
+                "Saloon": "{{Random: {{i18n: SS1.Saloon}}@@{{i18n: SS2.Saloon}}@@{{i18n: SS3.Saloon}}@@{{i18n: SS4.Saloon}}@@{{i18n: SS5.Saloon}} |inputSeparator=@@}}",
+                "Pierre": "{{Random: {{i18n: SS1.Pierre}}@@{{i18n: SS2.Pierre}}@@{{i18n: SS3.Pierre}}@@{{i18n: SS4.Pierre}}@@{{i18n: SS5.Pierre}} |inputSeparator=@@}}",
+                "Sunday": "{{Random: {{i18n: SS1.Sunday}}@@{{i18n: SS2.Sunday}}@@{{i18n: SS3.Sunday}}@@{{i18n: SS4.Sunday}}@@{{i18n: SS5.Sunday}} |inputSeparator=@@}}",
+                "Mayor": "{{Random: {{i18n: SS1.Mayor}}@@{{i18n: SS2.Mayor}}@@{{i18n: SS3.Mayor}}@@{{i18n: SS4.Mayor}}@@{{i18n: SS5.Mayor}} |inputSeparator=@@}}",
+                "Hospital": "{{i18n: Hospital}}",
+                "HospitalMarriage": "{{i18n: HospitalMarriage}}"
+            }
+        },
+
+        //Changes work Morris dialogue when he's married and has low hearts
+        {
+            "Action": "EditData",
+            "Target": "Strings/schedules/Morris",
+            "When": {"Spouse |contains=MorrisTod": "true", "Hearts:MorrisTod": "{{Range: 0, 8}}"},
+            "Entries": {
+                "Joja": "{{i18n: SSBad.Joja}}",
+                "Pierre": "{{i18n: SSBad.Pierre}}",
+                "Saloon": "{{i18n: SSBad.Saloon}}",
+                "Sunday": "{{i18n: SSBad.Sunday}}",
+                "Mayor": "{{i18n: SSBad.Mayor}}"
+            }
+        },
+
+        //Adds movie dialogue
+        {
+            "Action": "EditData",
+            "Target": "Strings/Characters",
+            "Entries": { 
+            "MovieInvite_Spouse_MorrisTod": "{{i18n: Movie.SpouseInvite}}"
+            }
+        },
+
+        //Concession and gift tastes (all tastes are the same as SVE, but dialogue is changed)
+        {
+            "Action": "EditData",
+            "Target": "Data/ConcessionTastes",
+            "Entries": {
+            "MorrisTod": {
+            "Name": "MorrisTod",
+            "LovedTags": [
+            "Gourmet"
+            ],
+            "LikedTags": [
+            "Healthy", "Salty"
+            ],
+            "DislikedTags": [
+            "Joja"
+            ]
+        }
+        }
+        },
+
+        //Adds Morris movie reactions for Joja route (no SVE)
+        {
+        "Action": "EditData",
+        "Target": "Data/MoviesReactions",
+        "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false", "HasSeenEvent |contains=191393": "false"},
+        "Entries": {
+        "MorrisTod": {
+            "NPCName": "MorrisTod",
+            "Reactions": [
+            {
+                "Tag": "classic",
+                "Response": "love",
+                "Whitelist": [],
+                "SpecialResponses": {
+                    "BeforeMovie": {
+                        "ResponsePoint": null,
+                        "Script": "",
+                        "Text": "{{i18n: Movie.ClassicBefore}}"
+                    },
+                    "DuringMovie": {
+                        "ResponsePoint": null,
+                        "Script": "",
+                        "Text": "{{i18n: Movie.ClassicDuring}}"
+                    },
+                    "AfterMovie": {
+                        "ResponsePoint": null,
+                        "Script": "",
+                        "Text": "{{i18n: Movie.ClassicAfter}}"
+                    }
+                    },
+                "ID": "reaction_0"
+            },
+            {
+                "Tag": "horror",
+                "Response": "dislike",
+                "Whitelist": [],
+                "SpecialResponses": {
+                    "BeforeMovie": {
+                        "ResponsePoint": null,
+                        "Script": "",
+                        "Text": "{{i18n: Movie.HorrorBefore}}"
+                    },
+                    "DuringMovie": {
+                        "ResponsePoint": null,
+                        "Script": "/jump MorrisTod/pause 500/message \"{{i18n: Movie.HorrorDuringScript}}\"",
+                        "Text": "{{i18n: Movie.HorrorDuring}}"
+                    },
+                    "AfterMovie": {
+                        "ResponsePoint": null,
+                        "Script": "",
+                        "Text": "{{i18n: Movie.HorrorAfter}}"
+                    }
+                    },
+                "ID": "reaction_1"
+            },
+            {
+                "Tag": "winter_movie_1",
+                "Response": "like",
+                "Whitelist": [],
+                "SpecialResponses": {
+                "BeforeMovie": {
+                    "ResponsePoint": null,
+                    "Script": "",
+                    "Text": "{{i18n: Movie.Winter1Before}}"
+                },
+                "DuringMovie": {
+                    "ResponsePoint": null,
+                    "Script": "",
+                    "Text": "{{i18n: Movie.Winter1During}}"
+                },
+                "AfterMovie": {
+                    "ResponsePoint": null,
+                    "Script": "",
+                    "Text": "{{i18n: Movie.Winter1After}}"
+                }
+                },
+                "ID": "reaction_2"
+            },
+            {
+                "Tag": "winter_movie_0",
+                "Response": "like",
+                "Whitelist": [],
+                "SpecialResponses": {
+                "BeforeMovie": {
+                    "ResponsePoint": null,
+                    "Script": "",
+                    "Text": "{{i18n: Movie.Winter0Before}}"
+                },
+                "DuringMovie": {
+                    "ResponsePoint": null,
+                    "Script": "",
+                    "Text": "{{i18n: Movie.Winter0During}}"
+                },
+                "AfterMovie": {
+                    "ResponsePoint": null,
+                    "Script": "",
+                    "Text": "{{i18n: Movie.Winter0After}}"
+                }
+                },
+                "ID": "reaction_3"
+            },
+            {
+                "Tag": "love",
+                "Response": "like",
+                "Whitelist": [],
+                "SpecialResponses": {
+                "BeforeMovie": {
+                    "ResponsePoint": null,
+                    "Script": "",
+                    "Text": "{{i18n: Movie.LoveBefore}}"
+                },
+                "DuringMovie": {
+                    "ResponsePoint": null,
+                    "Script": "",
+                    "Text": "{{i18n: Movie.LoveDuring}}"
+                },
+                "AfterMovie": {
+                    "ResponsePoint": null,
+                    "Script": "",
+                    "Text": "{{i18n: Movie.LoveAfter}}"
+                }
+                },
+                "ID": "reaction_4"
+            },
+            {
+                "Tag": "like",
+                "Response": "like",
+                "Whitelist": [],
+                "SpecialResponses": {
+                "BeforeMovie": {
+                    "ResponsePoint": null,
+                    "Script": "",
+                    "Text": "{{i18n: Movie.LikeBefore}}"
+                },
+                "DuringMovie": null,
+                "AfterMovie": {
+                    "ResponsePoint": null,
+                    "Script": "",
+                    "Text": "{{i18n: i18n: Movie.LikeAfter}}"
+                }
+                },
+                "ID": "reaction_5"
+            },
+            {
+                "Tag": "dislike",
+                "Response": "like",
+                "Whitelist": [],
+                "SpecialResponses": {
+                "BeforeMovie": {
+                    "ResponsePoint": null,
+                    "Script": "",
+                    "Text": "{{i18n: Movie.DislikeBefore}}"
+                },
+                "DuringMovie": {
+                    "ResponsePoint": null,
+                    "Script": "/textAboveHead MorrisTod \"{{i18n: Movie.DislikeDuringScript1}}\"/message \"{{i18n: Movie.DislikeDuringScript2}}\"",
+                    "Text": "{{i18n: Movie.DislikeDuring}}"
+                },
+                "AfterMovie": {
+                    "ResponsePoint": null,
+                    "Script": "",
+                    "Text": "{{i18n: Movie.DislikeAfter}}"
+                }
+                },
+                "ID": "reaction_6"
+            }
+            ]
+            }
+        }
+        },
+
+        //Adds Morris movie reactions for CC route
+        {
+            "Action": "EditData",
+            "Target": "Data/MoviesReactions",
+            "When": {"HasSeenEvent |contains=191393": "true"},
+            "Entries": {
+            "MorrisTod": {
+                "NPCName": "MorrisTod",
+                "Reactions": [
+                    {
+                        "Tag": "classic",
+                        "Response": "love",
+                        "Whitelist": [],
+                        "SpecialResponses": {
+                            "BeforeMovie": {
+                                "ResponsePoint": null,
+                                "Script": "",
+                                "Text": "{{i18n: Movie.ClassicBefore}}"
+                            },
+                            "DuringMovie": {
+                                "ResponsePoint": null,
+                                "Script": "",
+                                "Text": "{{i18n: Movie.ClassicDuring}}"
+                            },
+                            "AfterMovie": {
+                                "ResponsePoint": null,
+                                "Script": "",
+                                "Text": "{{i18n: Movie.ClassicAfter}}"
+                            }
+                            },
+                        "ID": "reaction_0"
+                    },
+                    {
+                        "Tag": "horror",
+                        "Response": "dislike",
+                        "Whitelist": [],
+                        "SpecialResponses": {
+                            "BeforeMovie": {
+                                "ResponsePoint": null,
+                                "Script": "",
+                                "Text": "{{i18n: Movie.HorrorBefore}}"
+                            },
+                            "DuringMovie": {
+                                "ResponsePoint": null,
+                                "Script": "/jump MorrisTod/pause 500/message \"{{i18n: Movie.HorrorDuringScript}}\"",
+                                "Text": "{{i18n: Movie.HorrorDuring}}"
+                            },
+                            "AfterMovie": {
+                                "ResponsePoint": null,
+                                "Script": "",
+                                "Text": "{{i18n: Movie.HorrorAfter}}"
+                            }
+                            },
+                        "ID": "reaction_1"
+                    },
+                    {
+                        "Tag": "winter_movie_1",
+                        "Response": "like",
+                        "Whitelist": [],
+                        "SpecialResponses": {
+                        "BeforeMovie": {
+                            "ResponsePoint": null,
+                            "Script": "",
+                            "Text": "{{i18n: Movie.Winter1Before}}"
+                        },
+                        "DuringMovie": {
+                            "ResponsePoint": null,
+                            "Script": "",
+                            "Text": "{{i18n: Movie.Winter1During}}"
+                        },
+                        "AfterMovie": {
+                            "ResponsePoint": null,
+                            "Script": "",
+                            "Text": "{{i18n: Movie.Winter1After}}"
+                        }
+                        },
+                        "ID": "reaction_2"
+                    },
+                    {
+                        "Tag": "winter_movie_0",
+                        "Response": "like",
+                        "Whitelist": [],
+                        "SpecialResponses": {
+                        "BeforeMovie": {
+                            "ResponsePoint": null,
+                            "Script": "",
+                            "Text": "{{i18n: Movie.Winter0Before}}"
+                        },
+                        "DuringMovie": {
+                            "ResponsePoint": null,
+                            "Script": "",
+                            "Text": "{{i18n: Movie.Winter0During}}"
+                        },
+                        "AfterMovie": {
+                            "ResponsePoint": null,
+                            "Script": "",
+                            "Text": "{{i18n: Movie.Winter0After}}"
+                        }
+                        },
+                        "ID": "reaction_3"
+                    },
+                    {
+                        "Tag": "love",
+                        "Response": "like",
+                        "Whitelist": [],
+                        "SpecialResponses": {
+                        "BeforeMovie": {
+                            "ResponsePoint": null,
+                            "Script": "",
+                            "Text": "{{i18n: Movie.LoveBefore}}"
+                        },
+                        "DuringMovie": {
+                            "ResponsePoint": null,
+                            "Script": "",
+                            "Text": "{{i18n: Movie.LoveDuring}}"
+                        },
+                        "AfterMovie": {
+                            "ResponsePoint": null,
+                            "Script": "",
+                            "Text": "{{i18n: Movie.LoveAfter}}"
+                        }
+                        },
+                        "ID": "reaction_4"
+                    },
+                    {
+                        "Tag": "like",
+                        "Response": "like",
+                        "Whitelist": [],
+                        "SpecialResponses": {
+                        "BeforeMovie": {
+                            "ResponsePoint": null,
+                            "Script": "",
+                            "Text": "{{i18n: Movie.LikeBefore}}"
+                        },
+                        "DuringMovie": null,
+                        "AfterMovie": {
+                            "ResponsePoint": null,
+                            "Script": "",
+                            "Text": "{{i18n: Movie.LikeAfter}}"
+                        }
+                        },
+                        "ID": "reaction_5"
+                    },
+                    {
+                        "Tag": "dislike",
+                        "Response": "like",
+                        "Whitelist": [],
+                        "SpecialResponses": {
+                        "BeforeMovie": {
+                            "ResponsePoint": null,
+                            "Script": "",
+                            "Text": "{{i18n: Movie.DislikeBefore}}"
+                        },
+                        "DuringMovie": {
+                            "ResponsePoint": null,
+                            "Script": "/textAboveHead MorrisTod \"{{i18n: Movie.DislikeDuringScript1}}\"/message \"{{i18n: Movie.DislikeDuringScript2}}\"",
+                            "Text": "{{i18n: Movie.DislikeDuring}}"
+                        },
+                        "AfterMovie": {
+                            "ResponsePoint": null,
+                            "Script": "",
+                            "Text": "{{i18n: Movie.DislikeAfter}}"
+                        }
+                        },
+                        "ID": "reaction_6"
+                    }
+                ]
+                }
+            }
+            },
+
+            //Adds one-off Morris dialogue lines
+
+            {
+                "Action": "EditData",
+                "Target": "Characters/Dialogue/MorrisTod",
+                "Entries": {
+                    "breakUp": "{{i18n: breakUp}}",
+                    "pamHouseUpgrade": "{{i18n: pamHouseUpgrade}}",
+                    "pamHouseUpgradeAnonymous": "{{i18n: pamHouseUpgradeAnonymous}}",
+                    "cc_Begin": "{{i18n: cc_Begin}}",
+                    "cc_Complete": "{{i18n: cc_Complete}}",
+                    "joja_Begin": "{{i18n: joja_Begin}}"
+                }
+            },
+
+            {
+                "Action": "EditData",
+                "Target": "Characters/Dialogue/MorrisTod",
+                "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP":"false"},
+                "Entries": {
+                    "Resort_Entering": "{{i18n: Resort_Entering}}",
+                    "Resort_Leaving": "{{i18n: Resort_Leaving}}",
+                    "Resort_Shore": "{{i18n: Resort_Shore}}",
+                    "Resort_Chair": "{{i18n: Resort_Chair}}",
+                    "Resort_Bar": "{{i18n: Resort_Bar}}",
+                    "Resort": "{{i18n: Resort}}"
+                }
+            },
+
+
+       //Sprite changes
+
+        //Adds custom kissing, Flower Festival, and wedding sprites for Morris to sprites added by SVE
+        {
+            "Action": "EditImage",
+            "Target": "Characters/MorrisTod",
+            "FromFile": "assets/Portraits/Morris.png",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "true"},
+            "FromArea": {"X": 0, "Y": 322, "Width": 64, "Height": 94},
+            "ToArea": {"X": 0, "Y": 322, "Width": 64, "Height": 94}
+        },
+        //Adds custom kissing, Flower Festival, and wedding sprites for Morris to vanilla sprite
+        {
+            "Action": "EditImage",
+            "Target": "Characters/Morris",
+            "FromFile": "assets/Portraits/Morris.png",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "true"},
+            "FromArea": {"X": 0, "Y": 322, "Width": 64, "Height": 94},
+            "ToArea": {"X": 0, "Y": 322, "Width": 64, "Height": 94}
+        },
+        //Adds regular kissing sprite for Morris when SVE is installed after the wedding (Note: This replaces a frame that's only used in Morris's 8-heart SVE event)
+        {
+            "Action": "EditImage",
+            "Target": "Characters/MorrisTod",
+            "FromFile": "assets/Portraits/Morris.png",
+            "When": {
+                "HasMod |contains=FlashShifter.StardewValleyExpandedCP": "true",
+                "Spouse |contains=MorrisTod": "true"
+            },
+            "FromArea": {"X": 1, "Y": 226, "Width": 16, "Height": 30},
+            "ToArea": {"X": 1, "Y": 226, "Width": 16, "Height": 30}
+        },
+
+        //Loads Morris' sprites when SVE isn't installed
+        {
+            "Action": "Load",
+            "Target": "Characters/MorrisTod",
+            "FromFile": "assets/Portraits/Morris.png",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false"}
+        },
+        {
+            "Action": "Load",
+            "Target": "Characters/Morris",
+            "FromFile": "assets/Portraits/Morris.png",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false"}
+        },
+
+        //Load Morris's portraits when SVE not installed
+        {
+            "Action": "Load",
+            "Target": "Portraits/MorrisTod",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false"},
+            "FromFile": "assets/Portraits/MorrisPortrait.png"
+        },
+
+        //Load Morris's portraits when SVE not installed
+        {
+            
+            "Action": "Load",
+            "Target": "Portraits/Morris",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false"},
+            "FromFile": "assets/Portraits/MorrisPortrait.png"
+        },
+        //Adds love and very angry portrait for Morris to SVE portraits
+        {
+            "Action": "EditImage",
+            "Target": "Portraits/MorrisTod",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "true"},
+            "FromFile": "assets/Portraits/MorrisExtraPortrait.png",
+            "ToArea": {
+                "X": 0,
+                "Y": 320,
+                "Width": 128,
+                "Height": 64
+            }
+        },
+        {
+            "Action": "EditImage",
+            "Target": "Portraits/Morris",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "true"},
+            "FromFile": "assets/Portraits/MorrisExtraPortrait.png",
+            "ToArea": {
+                "X": 0,
+                "Y": 320,
+                "Width": 128,
+                "Height": 64
+            }
+        },
+        //Loads Morris's resort sprites
+        {
+            "Action": "Load",
+            "Target": "Characters/Morris_Beach",
+            "FromFile": "assets/Portraits/Morris_Beach.png"
+        },
+
+
+
+
+
+
+        //Map changes
+
+        //Adds Morris path to bus stop map
+        {
+            "Action": "EditMap",
+            "Target": "Maps/BusStop",
+            "FromFile": "assets/Maps/BusStopMorris.tmx",
+            "FromArea": {"X": 10, "Y": 0, "Width": 6, "Height": 5},
+            "ToArea": {"X": 20, "Y": 0, "Width": 6, "Height": 5},
+            "AddWarps": [
+                "21 -1 Custom_Yoshimax_MorrisLand 14 24",
+                "22 -1 Custom_Yoshimax_MorrisLand 14 24",
+                "23 -1 Custom_Yoshimax_MorrisLand 14 24",
+                "24 -1 Custom_Yoshimax_MorrisLand 14 24"
+            ]
+
+        },
+        {
+            "Action": "EditMap",
+            "Target": "Maps/Custom_Yoshimax_MorrisLand",
+            "AddWarps": [
+                "13 25 BusStop 22 0",
+                "14 25 BusStop 22 0",
+                "15 25 BusStop 22 0"
+            ]
+
+        },
+        //Adds map messages
+        {
+            "Action": "EditData",
+            "Target": "Strings/StringsFromMaps",
+            "Entries": {
+                "MorrisLand.1": "{{i18n: MorrisLand.1}}",
+                "MorrisLand.2": "{{i18n: MorrisLand.2}}",
+                "MorrisLand.3": "{{i18n: MorrisLand.3}}",
+                "MorrisLand.4": "{{i18n: MorrisLand.4}}",
+                "MorrisHome.1": "{{i18n: MorrisHome.1}}",
+                "MorrisHome.2": "{{i18n: MorrisHome.2}}",
+                "MorrisHome.3": "{{i18n: MorrisHome.3}}",
+                "MorrisHome.4": "{{i18n: MorrisHome.4}}",
+                "MorrisHome.5": "{{i18n: MorrisHome.5}}",
+                "MorrisHome.6": "{{i18n: MorrisHome.6}}",
+                "MorrisHome.7": "{{i18n: MorrisHome.7}}",
+                "MorrisHome.8": "{{i18n: MorrisHome.8}}",
+                "MorrisHome.9": "{{i18n: MorrisHome.9}}",
+                "MorrisHome.10": "{{i18n: MorrisHome.10}}",
+                "MorrisHome.11": "{{i18n: MorrisHome.11}}",
+                "MorrisHome.12": "{{i18n: MorrisHome.12}}",
+                "MorrisHome.13": "{{i18n: MorrisHome.13}}"
+            }
+        },
+        //Modifies map messages when CC completed
+        {
+            "Action": "EditData",
+            "Target": "Strings/StringsFromMaps",
+            "When": {
+                "HasSeenEvent |contains=191393": "true"
+            },
+            "Entries": {
+                "MorrisLand.2": "{{i18n: MorrisLandCC.2}}",
+                "MorrisLand.4": "{{i18n: MorrisLandCC.4}}",
+                "MorrisHome.2": "{{i18n: MorrisHomeCC.2}}",
+                "MorrisHome.3": "{{i18n: MorrisHomeCC.3}}",
+                "MorrisHome.4": "{{i18n: MorrisHomeCC.4}}",
+                "MorrisHome.5": "{{i18n: MorrisHomeCC.5}}",
+                "MorrisHome.9": "{{i18n: MorrisHomeCC.9}}",
+                "MorrisHome.10": "{{i18n: MorrisHomeCC.10}}",
+                "MorrisHome.11": "{{i18n: MorrisHomeCC.11}}",
+                "MorrisHome.13": "{{i18n: MorrisHomeCC.13}}"
+            }
+        },
+        //Adds map messages when married to Morris
+        {
+            "Action": "EditData",
+            "Target": "Strings/StringsFromMaps",
+            "When": {
+                "Spouse |contains=MorrisTod": "true"
+            },
+            "Entries": {
+                "MorrisLand.2": "{{i18n: MorrisLandMarriage.2}}",
+                "MorrisHome.8": "{{i18n: MorrisHomeMarriage.8}}",
+                "MorrisHome.10": "{{i18n: MorrisHomeMarriage.10}}",
+                "MorrisHome.11": "{{i18n: MorrisHomeMarriage.11}}",
+                "MorrisHome.13": "{{i18n: MorrisHomeJojaMarriage.13}}"
+            }
+        },
+        //Modifies letter when married to Morris and CC complete
+        {
+            "Action": "EditData",
+            "Target": "Strings/StringsFromMaps",
+            "When": {
+                "Spouse |contains=MorrisTod": "true",
+                "HasSeenEvent |contains=191393": "true"
+            },
+            "Entries": {
+                "MorrisHome.13": "{{i18n: MorrisHomeCCMarriage.13}}"
+            }
+        },
+        //Edits map to make Morris accessible when SVE isn't installed
+        {
+            "Action": "EditMap",
+            "Target": "Maps/Jojamart",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false"},
+            "MapTiles": [
+                {
+                   "Position": {"X": 21, "Y": 23},
+                   "Layer": "Front",
+                   "Remove": true
+                },
+                {
+                    "Position": {"X": 21, "Y": 24},
+                    "Layer": "Buildings",
+                    "Remove": true
+                },
+                {
+                   "Position": {"X": 22, "Y": 22},
+                   "Layer": "Front",
+                   "Remove": true
+               },
+               {
+                "Position": {"X": 22, "Y": 23},
+                "Layer": "Buildings",
+                "Remove": true
+                }
+            ]
+        },
+
+        //Allows for Morris to run the shop on Wednesdays during normal opening hours
+                {
+            "Action": "EditData",
+            "Target": "Data/Shops",
+            "TargetField": ["SeedShop"],
+            "When": {"DayOfWeek": "Wednesday", "Time": "{{Range: 0900, 1700}}", "HasSeenEvent |contains=191393": "true"},
+            "Entries": {
+                    "Owners": [{
+                        "Name": "MorrisTod",
+                        "Portrait": "MorrisTod"
+                    }
+                    ]
+                    
+                },
+            
+            "Update": "OnTimeChange"
+        },
+        /*{
+            "Action": "EditMap",
+            "Target": "Maps/SeedShop",
+            "When": {"DayOfWeek": "Wednesday", "Time": "{{Range: 0900, 1700}}", "HasSeenEvent |contains=191393": "true"},
+            "MapTiles": [
+                {
+                   "Position": {"X": 4, "Y": 18},
+                   "Layer": "Buildings",
+                   "SetProperties": {
+                       "Action": "",
+                       "Shop": "Vanilla!PierreShop"
+                   }
+                },
+                {
+                    "Position": {"X": 5, "Y": 18},
+                    "Layer": "Buildings",
+                    "SetProperties": {
+                        "Action": "",
+                        "Shop": "Vanilla!PierreShop"
+                    }
+                }
+            ],
+            "Update": "OnTimeChange"
+        },
+        {
+            "Action": "EditMap",
+            "Target": "Maps/SeedShop",
+            "When": {"DayOfWeek": "Wednesday", "Time": "{{Range: 1700, 2600}}", "HasSeenEvent |contains=191393": "true"},
+            "MapTiles": [
+                {
+                   "Position": {"X": 4, "Y": 18},
+                   "Layer": "Buildings",
+                   "SetProperties": {
+                       "Action": "Buy General",
+                       "Shop": null
+                   }
+                },
+                {
+                    "Position": {"X": 5, "Y": 18},
+                    "Layer": "Buildings",
+                    "SetProperties": {
+                        "Action": "Buy General",
+                        "Shop": null
+                    }
+                }
+            ],
+            "Update": "OnTimeChange"
+        },*/
+        {
+            "Action": "EditData",
+            "Target": "Strings/StringsFromCSFiles",
+            "When": {"DayOfWeek": "Wednesday", "Time": "{{Range: 0600, 2600}}", "HasSeenEvent |contains=191393": "true"},
+            "Entries": {
+                "GameLocation.cs.8525": "{{i18n: MorrisShop}}"
+            }
+        },
+
+        //Removes Joja sign from Morris's house
+        {
+            "Action": "EditMap",
+            "Target": "Maps/Custom_Yoshimax_MorrisHome",
+            "When": {"HasSeenEvent |contains=191393": "true"},
+            "MapTiles": [
+                {
+                    "Position": {"X": 7, "Y": 7},
+                    "Layer": "Front",
+                    "Remove": true
+                },
+                {
+                    "Position": {"X": 8, "Y": 7},
+                    "Layer": "Front",
+                    "Remove": true
+                },
+                {
+                    "Position": {"X": 9, "Y": 7},
+                    "Layer": "Front",
+                    "Remove": true
+                },
+                {
+                    "Position": {"X": 7, "Y": 8},
+                    "Layer": "Front",
+                    "Remove": true
+                },
+                {
+                    "Position": {"X": 8, "Y": 8},
+                    "Layer": "Front",
+                    "Remove": true
+                },
+                {
+                    "Position": {"X": 9, "Y": 8},
+                    "Layer": "Front",
+                    "Remove": true
+                }
+
+            ]
+        },
+        //Adds Morris's spouse room
+        {
+            "Action": "Load",
+            "Target": "Maps/Custom_MorrisRoom",
+            "FromFile": "assets/Maps/MorrisSpouseRoom.tmx"
+        },
+        {
+            "Action": "EditData",
+            "Target": "Data/SpouseRooms",
+            "Entries": {
+            "MorrisTod": "Custom_MorrisRoom/0"
+            }
+        },
+
+        //Adds Morris's spouse patio
+        {
+            "Action": "EditData",
+            "Target": "Data/SpousePatios",
+            "Entries": {
+                "MorrisTod": "Morris_Spouse_Area/0/0/0 0"
+            }
+        },
+        {
+            "Action": "Load",
+            "Target": "Maps/Morris_Spouse_Area",
+            "FromFile": "assets/Maps/morrispatio.tmx"
+        },
+
+        //Removes Morris's letter to Pierre from Pierre's shop since it conflicts with his 2 heart event (vanilla)
+        {
+            "Action": "EditMap",
+            "Target": "Maps/SeedShop",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false"},
+            "MapTiles": [
+                {
+                    "Position": {"X": 40, "Y": 7},
+                    "Layer": "Front",
+                    "Remove": true
+                },
+                {
+                    "Position": {"X": 40, "Y": 8},
+                    "Layer": "Buildings",
+                    "Remove": true
+
+                },
+                {
+                    "Position": {"X": 40, "Y": 8},
+                    "Layer": "Buildings",
+                    "SetIndex": 745,
+                    "SetTilesheet": "1"
+
+                }
+            ]
+        },
+
+        //Removes Morris's letter to Pierre from Pierre's shop since it conflicts with his 2 heart event (SVE)
+        {
+            "Action": "EditMap",
+            "Target": "Maps/SeedShop",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "true"},
+            "MapTiles": [
+                {
+                    "Position": {"X": 40, "Y": 7},
+                    "Layer": "Front",
+                    "Remove": true
+                },
+                {
+                    "Position": {"X": 40, "Y": 7},
+                    "Layer": "Buildings",
+                    "Remove": true
+                },
+                {
+                    "Position": {"X": 40, "Y": 8},
+                    "Layer": "Buildings",
+                    "Remove": true
+
+                },
+                {
+                    "Position": {"X": 40, "Y": 8},
+                    "Layer": "Buildings",
+                    "SetIndex": 864,
+                    "SetTilesheet": "1"
+
+                },
+                {
+                    "Position": {"X": 40, "Y": 7},
+                    "Layer": "Buildings",
+                    "SetIndex": 768,
+                    "SetTilesheet": "1"
+
+                }
+            ]
+        },
+
+        //Adds Morris's house to world map (SVE)
+        {
+            "Action": "EditImage",
+            "Target": "LooseSprites/Map",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "true"},
+            "FromFile": "assets/Maps/{{season}}svemappatch.png",
+            "ToArea": {"X": 129, "Y": 32, "Height": 20, "Width": 22}
+        },
+
+        //Adds Morris's house to world map (No SVE, has NPC Map Locations)
+        {
+            "Action": "EditImage",
+            "Target": "LooseSprites/Map",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false", "HasMod |contains=Bouhm.NPCMapLocations": "true"},
+            "FromFile": "assets/Maps/{{season}}mappatch.png",
+            "ToArea": {"X": 129, "Y": 32, "Height": 20, "Width": 22}
+        },
+        //Adds Morris's house to world map (No SVE, no NPC Map Locations)
+        {
+            "Action": "EditImage",
+            "Target": "LooseSprites/Map",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false", "HasMod |contains=Bouhm.NPCMapLocations": "false"},
+            "FromFile": "assets/Maps/springmappatch.png",
+            "ToArea": {"X": 129, "Y": 34, "Height": 20, "Width": 22}
+        },
+
+        //Loads Morris's 14 heart event map
+        {
+            "Action": "Load",
+            "Target": "Maps/Custom_Yoshimax_MorrisPhotos",
+            "FromFile": "assets/Maps/MorrisPhotos.tmx"
+        },
+
+        //Adds house to NPC Map Locations
+
+        {  
+            "Action": "EditData",
+            "Target": "Mods/Bouhm.NPCMapLocations/Locations",
+            "Entries": {
+        
+            "Custom_Yoshimax_MorrisLand": {
+            "MapVectors": [
+                {
+                    "TileX": 0,
+                    "TileY": 0,
+                    "MapX": 531,
+                    "MapY": 149
+                },
+                {
+                    "TileX": 43,
+                    "TileY": 42,
+                    "MapX": 574,
+                    "MapY": 191
+                }
+                ],	
+            "MapTooltip": {
+            "X": 531,
+            "Y": 149,
+            "Width": 43,
+            "Height": 42,
+            "PrimaryText": "{{i18n: 1MorrisLane}}",
+            "SecondaryText": "{{i18n: HomeOfMorris}}"
+            }
+           }
+          }
+        },
+        {
+            "Action": "EditData",
+            "Target": "Mods/Bouhm.NPCMapLocations/NPCs",
+            "When": { "HasSeenEvent": "191393", "HasMod |contains=FlashShifter.StardewValleyExpandedCP": "true" },
+            "Entries": {
+             "MorrisTod": { "Exclude": false }
+           }
+        },
+
+
+
+
+
+
+
+
+        //Schedules
+        
+        //Loads Morris' schedule when SVE isn't installed 
+        {
+            "Action": "Load",
+            "Target": "Characters/schedules/MorrisTod",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false"},
+            "FromFile": "assets/Schedules/morrisschedule.json"
+        },
+
+        //Edits Morris' schedule when SVE is installed and CC not completed/he's not mayor
+        {
+            "Action": "EditData",
+            "Target": "Characters/schedules/MorrisTod",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "true", "HasSeenEvent |contains=191393": "false", "HasSeenEvent |contains=6663408": "false", "HasSeenEvent |contains=6665293": "false"},
+            "Entries": {
+                "marriageJob": "700 JojaMart 24 26 3 \"Strings\\schedules\\Morris:Joja\"/1700 Saloon 20 18 3 \"Strings\\schedules\\Morris:Saloon\"/1930 BusStop -1 23 3",
+                "rain":  "800 JojaMart 24 26 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "spring": "620 Town 88 51 2/940 JojaMart 24 26 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "Mon": "620 Town 88 51 2/940 JojaMart 24 26 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "Tue": "630 Custom_Yoshimax_MorrisLand 7 20 3/800 JojaMart 24 26 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "Wed": "620 Town 43 59 1 Morris_Coupon/900 JojaMart 24 26 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "Thu": "620 Town 72 54 2/930 JojaMart 24 26 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "Fri": "630 Town 93 52 2/940 JojaMart 24 26 3/2200 Custom_Yoshimax_MorrisHome 15 5 1",
+                "Sat": "630 Town 97 63 1/930 JojaMart 24 26 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "Sun": "630 Town 76 54 2/930 JojaMart 24 26 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "3": "610 Town 43 59 1 Morris_Coupon/900 JojaMart 24 26 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "10": "610 Town 44 59 1 Morris_Coupon/900 JojaMart 24 26 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "17": "610 Town 42 59 1 Morris_Coupon/900 JojaMart 24 26 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "24": "610 Town 43 60 1 Morris_Coupon/900 JojaMart 24 26 3/2300 Custom_Yoshimax_MorrisHome 15 5 1"
+            }
+        },
+
+        //Edits Morris' schedule when SVE is installed and CC is completed
+        {
+            "Action": "EditData",
+            "Target": "Characters/schedules/MorrisTod",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "true", "HasSeenEvent |contains=191393": "true"},
+            "Entries": {
+                "marriageJob": "700 SeedShop 5 19 0 \"Strings\\schedules\\Morris:Pierre\"/1700 Saloon 20 18 3 \"Strings\\schedules\\Morris:Saloon\"/1930 BusStop -1 23 3",
+                "marriageJobWed": "700 SeedShop 4 17 2 \"Strings\\schedules\\Morris:Pierre\"/1700 Saloon 20 18 3 \"Strings\\schedules\\Morris:Saloon\"/1930 BusStop -1 23 3",
+                "marriage_Sun": "820 Mountain 28 35 2 \"Strings\\schedules\\Morris:Sunday\"/1200 Beach 45 24 2 \"Strings\\schedules\\Morris:Sunday\"/1700 BusStop -1 23 3",
+                "rain":  "GOTO spring",
+                "spring": "620 Custom_Yoshimax_MorrisLand 5 21 0/740 Town 9 58 2/1000 SeedShop 6 19 0/1800 Saloon 20 17 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "Mon": "620 Custom_Yoshimax_MorrisLand 5 21 0/740 Town 9 58 2/1000 SeedShop 6 19 0/1800 Saloon 20 17 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "Tue": "620 Custom_Yoshimax_MorrisLand 5 21 0/740 Town 18 59 2/1000 SeedShop 12 28 3/1800 Saloon 20 17 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "Wed": "620 Custom_Yoshimax_MorrisLand 5 21 0/730 SeedShop 4 17 2/1700 Saloon 20 17 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "Thu": "620 Custom_Yoshimax_MorrisLand 5 21 0/740 Town 47 57 2/1000 SeedShop 12 28 3/1800 Saloon 20 17 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "Fri": "620 Custom_Yoshimax_MorrisLand 5 21 0/740 Town 25 36 0/1000 SeedShop 6 19 0/1800 Saloon 20 17 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "Sat": "830 SeedShop 6 19 0/1330 Town 9 58 2/1730 Custom_Yoshimax_MorrisLand 17 20 1/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "Sun": "620 Custom_Yoshimax_MorrisLand 17 20 1/820 Mountain 28 35 2/1200 Beach 45 24 2/1800 Saloon 20 17 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "3": "GOTO Wed",
+                "10": "GOTO Wed",
+                "17": "GOTO Wed",
+                "24": "GOTO Wed"
+            }
+        },
+        
+        //Edits Morris' schedule when SVE isn't installed and CC is completed
+        {
+            "Action": "EditData",
+            "Target": "Characters/schedules/MorrisTod",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false", "HasSeenEvent |contains=191393": "true"},
+            "Entries": {
+                "rain":  "GOTO spring",
+                "spring": "620 Custom_Yoshimax_MorrisLand 5 21 0/740 Town 9 58 2/1000 SeedShop 6 19 0/1800 Saloon 20 17 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "Mon": "620 Custom_Yoshimax_MorrisLand 5 21 0/740 Town 9 58 2/1000 SeedShop 6 19 0/1800 Saloon 20 17 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "Tue": "620 Custom_Yoshimax_MorrisLand 5 21 0/740 Town 18 59 2/1000 SeedShop 12 28 3/1800 Saloon 20 17 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "Wed": "620 Custom_Yoshimax_MorrisLand 5 21 0/800 SeedShop 4 17 2/1700 Saloon 20 17 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "Thu": "620 Custom_Yoshimax_MorrisLand 5 21 0/740 Town 47 57 2/1000 SeedShop 6 19 0/1800 Saloon 12 28 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "Fri": "620 Custom_Yoshimax_MorrisLand 5 21 0/740 Town 25 36 0/1000 SeedShop 6 19 0/1800 Saloon 20 17 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "Sat": "830 SeedShop 6 19 0/1330 Town 9 58 2/1730 Custom_Yoshimax_MorrisLand 17 20 1/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "Sun": "620 Custom_Yoshimax_MorrisLand 17 20 1/820 Mountain 28 35 2/1200 Beach 45 24 2/1800 Saloon 20 17 3/2300 Custom_Yoshimax_MorrisHome 15 5 1",
+                "marriageJob": "700 SeedShop 5 19 0 \"Strings\\schedules\\Morris:Pierre\"/1700 Saloon 20 18 3 \"Strings\\schedules\\Morris:Saloon\"/1930 BusStop -1 23 3",
+                "marriageJobWed": "700 SeedShop 4 17 2 \"Strings\\schedules\\Morris:Pierre\"/1700 Saloon 20 18 3 \"Strings\\schedules\\Morris:Saloon\"/1930 BusStop -1 23 3",
+                "marriage_Sun": "820 Mountain 28 35 2 \"Strings\\schedules\\Morris:Sunday\"/1200 Beach 45 24 2 \"Strings\\schedules\\Morris:Sunday\"/1700 BusStop -1 23 3"
+            },
+            "Update": "OnTimeChange"
+        },
+
+        //Edits Pierre's schedule to give him Wednesday off
+        {
+            "Action": "EditData",
+            "Target": "Characters/schedules/Pierre",
+            "When": {"HasSeenEvent |contains=191393": "true"},
+            "Entries": {
+                "Wed": "610 SeedShop 20 19 3/1200 Mountain 28 35 2/1900 SeedShop 37 5 0/2100 SeedShop 20 5 0/2300 SeedShop 24 4 1 pierre_sleep"
+            }
+        },
+        
+        //When raining on Wednesdays, edits Pierre's and Morris's schedules so Morris still works at the store
+        {
+            "Action": "EditData",
+            "Target": "Characters/schedules/Pierre",
+            "When": {"DayOfWeek": "Wednesday", "Weather": "Rain, Storm"},
+            "Entries": {
+                "rain": "GOTO Wed"
+            }
+        },
+        
+        {
+            "Action": "EditData",
+            "Target": "Characters/schedules/MorrisTod",
+            "When": {"DayOfWeek": "Wednesday", "Weather": "Rain, Storm"},
+            "Entries": {
+                "rain": "GOTO Wed"
+
+            }
+        },
+        
+
+        //Edits Morris's schedule when he's the mayor
+        {
+            "Action": "Include",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "true", "HasSeenEvent |contains=6665293": "true"},
+            "FromFile": "assets/Schedules/mayorschedule{{DayOfWeek}}.json"
+        },
+
+        //Loads Morris's hardcoded marriage schedules for CC
+        {
+            "Action": "Include",
+            "When": {"Spouse |contains=MorrisTod": "true", "HasSeenEvent |contains=191393": "true"},
+            "FromFile": "assets/Schedules/marriageschedulecc.json"
+        },
+
+        //Loads Morris's hardcoded marriage schedules for Joja (SVE)
+        {
+            "Action": "Include",
+            "When": {"Spouse |contains=MorrisTod": "true", "HasSeenEvent |contains=191393": "false", "HasSeenEvent |contains=6665293": "false", "HasMod |contains=FlashShifter.StardewValleyExpandedCP": "true"},
+            "FromFile": "assets/Schedules/marriageschedulejoja.json"
+        },
+
+        //Loads Morris's hardcoded marriage schedules for Joja (No SVE)
+        {
+            "Action": "Include",
+            "When": {"Spouse |contains=MorrisTod": "true", "HasSeenEvent |contains=191393": "false", "HasSeenEvent |contains=6665293": "false", "HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false"},
+            "FromFile": "assets/Schedules/marriageschedulejojanosve.json"
+        },
+
+        //Loads Morris's hardcoded marriage schedules for mayor
+        {
+            "Action": "Include",
+            "When": {"Spouse |contains=MorrisTod": "true", "HasSeenEvent |contains=191393": "false", "HasSeenEvent |contains=6665293": "true", "HasMod |contains=FlashShifter.StardewValleyExpandedCP": "true"},
+            "FromFile": "assets/Schedules/marriageschedulemayor.json"
+        },
+
+        //Loads Morris's hardcoded marriage schedules for Joja if mayor event seen but SVE removed
+        {
+            "Action": "Include",
+            "When": {"Spouse |contains=MorrisTod": "true", "HasSeenEvent |contains=191393": "false", "HasSeenEvent |contains=6665293": "true", "HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false"},
+            "FromFile": "assets/Schedules/marriageschedulejojanosve.json"
+        },
+
+        //Morris's hospital checkup
+        {
+            "Action": "EditData",
+            "Target": "Characters/schedules/MorrisTod",
+            "Entries": {
+                "spring_19": "630 Town 18 59 2/1000 Hospital 13 14 0/1330 Hospital 4 6 1 \"Strings\\schedules\\Morris:Hospital\"/1530 Beach 45 24 2/1900 Saloon 20 17 3/2200 Custom_Yoshimax_MorrisHome 15 5 1",
+                "marriage_spring_19": "630 Town 18 59 2/1000 Hospital 13 14 0/1330 Hospital 4 6 1 \"Strings\\schedules\\Morris:HospitalMarriage\"/1530 Beach 45 24 2/1900 BusStop -1 23 3"
+            }
+        },
+
+        {
+            "Action": "EditData",
+            "Target": "Characters/schedules/MorrisTod",
+            "When": {"HasSeenEvent |contains=6663408": "true"},
+            "Entries": {
+                "spring_19": "0 Custom_MorrisHouse 16 6 2/630 Town 18 59 2/1000 Hospital 13 14 0/1330 Hospital 4 6 1 \"Strings\\schedules\\Morris:Hospital\"/1530 Beach 45 24 2/1900 Saloon 20 17 3/2200 Custom_MorrisHouse 16 6 2",
+                "marriage_spring_19": "630 Town 18 59 2/1000 Hospital 13 14 0/1330 Hospital 4 6 1 \"Strings\\schedules\\Morris:HospitalMarriage\"/1530 Beach 45 24 2/1900 BusStop -1 23 3"
+            }
+        },
+
+        {
+            "Action": "EditData",
+            "Target": "Characters/schedules/Harvey",
+            "Entries": {
+                "spring_19": "GOTO Tue",
+                "marriage_spring_19": "GOTO Tue"
+            }
+        },
+
+
+
+
+        //Festival changes
+
+        //Adds Morris to festivals when he's not the SVE mayor (uses SVE positions for continuity)
+
+        //Egg Festival
+        {
+            "Action": "EditData",
+            "Target": "Data/Festivals/spring13",
+            "When": {"HasSeenEvent |contains=6665293": "false"},
+            "TextOperations": [
+                {
+                    "Operation": "Append",
+                    "Target": [
+                        "Entries",
+                        "Set-Up_additionalCharacters"
+                    ],
+                    "Value": "MorrisTod 44 60 down",
+                    "Delimiter": "/"
+                },
+                {
+                    "Operation": "Append",
+                    "Target": ["Entries", "MainEvent_additionalCharacters"],
+                    "Value": "MorrisTod 22 67 right",
+                    "Delimiter": "/"
+                }
+            ]
+        },
+        { 
+            "Action": "EditData",
+            "Target": "Data/Festivals/spring13",
+            "When": {
+                "Spouse |contains=MorrisTod": "false", "HasSeenEvent |contains=6665293": "false"
+             },
+            "Entries": {
+              "MorrisTod": "{{i18n: Festival.Egg}}"
+            }
+        },
+        {
+            "Action": "EditData",
+            "Target": "Data/Festivals/spring13",
+            "Entries": {
+              "MorrisTod": "{{i18n: Festival.EggSpouse}}"
+            },
+            "When": {
+                "Spouse |contains=MorrisTod": "true"
+            }
+        },
+
+        //Flower Dance
+        {
+            "Action": "EditData",
+            "Target": "Data/Festivals/spring24",
+            "When": {"HasSeenEvent |contains=6665293": "false"},
+            "TextOperations": [
+                {
+                        
+                    "Operation": "Append",
+                    "Target": ["Entries", "Set-Up_additionalCharacters"],
+                    "Value": "MorrisTod 4 25 down",
+                    "Delimiter": "/"
+                },
+                {
+                    "Operation": "Append",
+                    "Target": ["Entries", "MainEvent_additionalCharacters"],
+                    "Value": "MorrisTod 4 25 right",
+                    "Delimiter": "/"
+                }
+            ]
+        },
+        { 
+            "Action": "EditData",
+            "Target": "Data/Festivals/spring24",
+            "When": {
+                "Spouse |contains=MorrisTod": "false"
+            },
+            "Entries": {
+              "MorrisTod": "{{i18n: Festival.Flower}}"
+            }
+        },
+        {
+            "Action": "EditData",
+            "Target": "Data/Festivals/spring24",
+            "Entries": {
+              "MorrisTod": "{{i18n: Festival.FlowerSpouse}}"
+            },
+            "When": {
+                "Spouse |contains=MorrisTod": "true"
+            }
+        },
+
+        //Luau
+        {
+            "Action": "EditData",
+            "Target": "Data/Festivals/summer11",
+            "When": {"HasSeenEvent |contains=6665293": "false"},
+            "TextOperations": [
+                {    
+                    "Operation": "Append",
+                    "Target": ["Entries", "Set-Up_additionalCharacters"],
+                    "Value": "MorrisTod 31 4 down",
+                    "Delimiter": "/"
+                    },
+                    {
+                    "Operation": "Append",
+                    "Target": ["Entries", "MainEvent_additionalCharacters"],
+                    "Value": "MorrisTod 34 10 down",
+                    "Delimiter": "/"
+                    }
+            ]
+        },
+        { 
+            "Action": "EditData",
+            "Target": "Data/Festivals/summer11",
+            "When": {
+                "HasSeenEvent |contains=6665293": "false",
+                "HasSeenEvent |contains=191393": "false"
+            },
+            "Entries": {
+              "MorrisTod": "{{i18n: Festival.Luau}}"
+            }
+        },
+        {
+            "Action": "EditData",
+            "Target": "Data/Festivals/summer11",
+            "When": {
+                "HasSeenEvent |contains=191393": "true"
+            },
+            "Entries": {
+              "MorrisTod": "{{i18n: Festival.LuauCC}}"
+            }
+        },
+
+        //Dance of the Moonlight Jellies
+        {   
+            "Action": "EditData",
+            "Target": "Data/Festivals/summer28",
+            "When": {
+                "HasSeenEvent |contains=6665293": "false"
+            },
+            "TextOperations": [
+          {    
+            "Operation": "Append",
+            "Target": ["Entries", "Set-Up_additionalCharacters"],
+            "Value": "MorrisTod 29 34 down",
+            "Delimiter": "/"
+          }
+         ]
+        },
+        { 
+            "Action": "EditData",
+            "Target": "Data/Festivals/summer28",
+            "When": {
+                "HasSeenEvent |contains=6665293": "false"
+            },
+            "Entries": {
+              "MorrisTod": "{{i18n: Festival.Jellies}}"
+            }
+        },
+
+        //Stardew Valley Fair
+        {
+            "Action": "EditData",
+            "Target": "Data/Festivals/fall16",
+            "When": {
+                "HasSeenEvent |contains=6665293": "false"
+            },
+            "TextOperations": [
+                {    
+                    "Operation": "Append",
+                    "Target": ["Entries", "Set-Up_additionalCharacters"],
+                    "Value": "MorrisTod 48 88 down",
+                    "Delimiter": "/"
+                }
+            ]
+        },
+        {
+            "Action": "EditData",
+            "Target": "Data/Festivals/fall16",
+            "When": {
+                "HasSeenEvent |contains=6665293": "false"
+            },
+            "Entries": {
+                "MorrisTod": "{{i18n: Festival.Fair}}"
+            }
+        },
+
+        //Spirit's Eve -- Note: SVE has different maps on even/odd years
+        {
+            "Action": "EditData",
+            "Target": "Data/Festivals/fall27",
+            "When": {
+                "HasSeenEvent |contains=6665293": "false",
+                "HasMod |contains=FlashShifter.StardewValleyExpandedCP": "true",
+                "Year": "1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59,61,63,65,67,69,71,73,75,77,79,81,83,85,87,89,91,93,95,97,99"
+            },
+            "TextOperations": [
+                {    
+                    "Operation": "Append",
+                    "Target": ["Entries", "Set-Up_additionalCharacters"],
+                    "Value": "MorrisTod 23 62 down",
+                    "Delimiter": "/"
+                  }
+            ]
+        },
+        {
+            "Action": "EditData",
+            "Target": "Data/Festivals/fall27",
+            "When": {
+                "HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false"
+            },
+            "TextOperations": [
+                {    
+                    "Operation": "Append",
+                    "Target": ["Entries", "Set-Up_additionalCharacters"],
+                    "Value": "MorrisTod 23 62 down",
+                    "Delimiter": "/"
+                  }
+            ]
+        },
+        {
+            "Action": "EditData",
+            "Target": "Data/Festivals/fall27",
+            "When": {
+                "HasSeenEvent |contains=6665293": "false",
+                "HasMod |contains=FlashShifter.StardewValleyExpandedCP": "true",
+                "Year": "2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,96,98,100"
+            },
+            "TextOperations": [
+                {    
+                    "Operation": "Append",
+                    "Target": ["Entries", "Set-Up_additionalCharacters"],
+                    "Value": "MorrisTod 29 57 down",
+                    "Delimiter": "/"
+                  }
+            ]
+        },
+        {
+            "Action": "EditData",
+            "Target": "Data/Festivals/fall27",
+            "When": {
+                "HasSeenEvent |contains=6665293": "false"
+            },
+            "Entries": {
+                "MorrisTod": "{{i18n: Festival.Spirits}}"
+            }
+        },
+        {
+            "Action": "EditData",
+            "Target": "Data/Festivals/fall27",
+            "When": {
+                "Relationship:MorrisTod": "Married"
+            },
+            "Entries": {
+                "MorrisTod": "{{i18n: Festival.SpiritsSpouse}}"
+            }
+        },
+
+        //Festival of Ice
+        {
+            "Action": "EditData",
+            "Target": "Data/Festivals/winter8",
+            "When": {
+                "HasSeenEvent |contains=6665293": "false"
+            },
+            "TextOperations": [
+                {    
+                    "Operation": "Append",
+                    "Target": ["Entries", "Set-Up_additionalCharacters"],
+                    "Value": "MorrisTod 74 29 down",
+                    "Delimiter": "/"
+                },
+                {
+                    "Operation": "Append",
+                    "Target": ["Entries", "Main-Event_additionalCharacters"],
+                    "Value": "MorrisTod 70 24 down",
+                    "Delimiter": "/"
+                }
+            ]
+
+        },
+        {
+            "Action": "EditData",
+            "Target": "Data/Festivals/winter8",
+            "When": {
+                "HasSeenEvent |contains=6665293": "false"
+            },
+            "Entries": {
+                "MorrisTod": "{{i18n: Festival.Ice}}"
+            }
+        },
+
+        //Feast of the Winter Star
+        {
+            "Action": "EditData",
+            "Target": "Data/Festivals/winter25",
+            "When": { "HasSeenEvent |contains=191393": true,  "HasMod |contains=FlashShifter.StardewValleyExpandedCP": "true"},
+            "TextOperations": [
+          {    
+            "Operation": "Append",
+            "Target": ["Entries", "Set-Up_additionalCharacters"],
+            "Value": "MorrisTod 38 59 down",
+            "Delimiter": "/"
+          }
+         ]
+        },
+        {
+            "Action": "EditData",
+            "Target": "Data/Festivals/winter25",
+            "When": {"HasMod |contains=FlashShifter.StardewValleyExpandedCP": "false"},
+            "TextOperations": [
+          {    
+            "Operation": "Append",
+            "Target": ["Entries", "Set-Up_additionalCharacters"],
+            "Value": "MorrisTod 36 59 down",
+            "Delimiter": "/"
+          }
+         ]
+        },
+        {
+            "Action": "EditData",
+            "Target": "Data/Festivals/winter25",
+            "When": {
+                "HasSeenEvent |contains=6665293": "false"
+            },
+            "Entries": {
+                "MorrisTod": "{{i18n: Festival.Winter}}"
+            }
+        },
+        {
+            "Action": "EditData",
+            "Target": "Data/Festivals/winter25",
+            "When": {
+                "HasSeenEvent |contains=191393": true
+            },
+            "Entries": {
+                "MorrisTod": "{{i18n: Festival.WinterCC}}"
+            }
+        },
+        {
+            "Action": "EditData",
+            "Target": "Data/Festivals/winter25",
+            "When": {
+                "Relationship:MorrisTod": "Married"
+            },
+            "Entries": {
+                "MorrisTod": "{{i18n: Festival.WinterSpouse}}"
+            }
+        }
+
+    ]
+}

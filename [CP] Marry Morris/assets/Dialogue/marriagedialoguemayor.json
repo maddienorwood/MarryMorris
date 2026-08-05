@@ -1,0 +1,35 @@
+{
+    "Changes": [
+    {  
+        "Action": "EditData",
+        "Target": "Characters/Dialogue/MarriageDialogueMorrisTod",
+        "Entries": {
+            
+                //Location/destination specific dialogue
+                "funLeave_MorrisTod": "{{i18n: MarriageMayor.funLeave}}",
+
+                //Outdoor dialogue (shows when on farm)
+                "Outdoor_4": "{{i18n: MarriageMayor.Outdoor_4}}",
+            
+                //Child dialogue
+                "OneKid_4": "{{i18n: MarriageMayor.OneKid_4}}",
+            
+                //Good dialogue
+                "Good_8": "{{i18n: MarriageMayor.Good_8}}",
+                "Good_9": "{{i18n: MarriageMayor.Good_9}}",
+            
+                //Neutral dialogue
+                "Neutral_8": "{{i18n: MarriageMayor.Neutral_8}}",
+                "Neutral_9": "{{i18n: MarriageMayor.Neutral_9}}",
+            
+                //Bad dialogue
+                "Bad_9": "{{i18n: MarriageMayor.Bad_9}}",
+            
+                //Day-specific dialogue
+                "summer_10": "{{i18n: MarriageMayor.summer_10}}",
+                "spring_1_2": "{{i18n: MarriageMayor.spring_1_2}}",
+                "spring_12": "{{i18n: MarriageMayor.spring_12}}",
+                "fall_15": "{{i18n: MarriageMayor.fall_15}}"
+        }
+    }
+]}
